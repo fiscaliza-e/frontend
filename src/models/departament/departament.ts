@@ -22,7 +22,7 @@ class Departament {
   toJSON() {
     return {
       id: this.id,
-      cityHallUserId: this.cityHallUserId,
+      city_hall_user_id: this.cityHallUserId,
       name: this.name,
       description: this.description,
       email: this.email,
@@ -32,7 +32,7 @@ class Departament {
   static fromJSON(json: any): Departament {
     return new Departament(
       json.id,
-      json.cityHallUserId,
+      json.city_hall_user_id,
       json.name,
       json.description,
       json.email

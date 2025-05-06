@@ -33,9 +33,9 @@ class CityHallUser {
     return new CityHallUser(
       json.id,
       json.cnpj,
-      json.cityName,
+      json.city_name,
       json.email,
-      json.addressId
+      json.address_id
     );
   }
 }

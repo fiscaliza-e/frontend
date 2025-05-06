@@ -22,20 +22,20 @@ class Resolution {
   toJSON() {
     return {
       id: this.id,
-      complaintId: this.complaintId,
+      complaint_id: this.complaintId,
       title: this.title,
       description: this.description,
-      resolution: this.resolutionDate.toISOString(),
+      resolution_date: this.resolutionDate.toISOString(),
     };
   }
 
   static fromJSON(json: any): Resolution {
     return new Resolution(
       json.id,
-      json.complaintId,
+      json.complaint_id,
       json.title,
       json.description,
-      new Date(json.resolution)
+      new Date(json.resolution_date)
     );
   }
 }

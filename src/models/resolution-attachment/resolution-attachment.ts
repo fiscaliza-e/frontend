@@ -9,19 +9,14 @@ class ResolutionAttachment {
 
   toJSON() {
     return {
-      resolutionId: this.resolutionId,
-      imageUrl: this.imageUrl,
+      resolution_id: this.resolutionId,
+      image_url: this.imageUrl,
     };
   }
 
-
-  static fromJSON(json: any): ResolutionAttachment{
-    return new ResolutionAttachment(
-        json.resolutionId,
-        json.imageUrl
-    )
+  static fromJSON(json: any): ResolutionAttachment {
+    return new ResolutionAttachment(json.resolutionId, json.imageUrl);
   }
 }
 
-
-export default ResolutionAttachment
+export default ResolutionAttachment;

@@ -1,27 +1,22 @@
 class ComplaintAttachment {
-    complaintId: number;
-    imageUrl: string;
-  
-    constructor(complaintId: number, imageUrl: string) {
-      this.complaintId = complaintId;
-      this.imageUrl = imageUrl;
-    }
-  
-    toJSON() {
-      return {
-        complaintId: this.complaintId,
-        imageUrl: this.imageUrl,
-      };
-    }
-  
-  
-    static fromJSON(json: any): ComplaintAttachment{
-      return new ComplaintAttachment(
-          json.complaintId,
-          json.imageUrl
-      )
-    }
+  complaintId: number;
+  imageUrl: string;
+
+  constructor(complaintId: number, imageUrl: string) {
+    this.complaintId = complaintId;
+    this.imageUrl = imageUrl;
   }
-  
-  
-  export default ComplaintAttachment
+
+  toJSON() {
+    return {
+      complaint_id: this.complaintId,
+      image_url: this.imageUrl,
+    };
+  }
+
+  static fromJSON(json: any): ComplaintAttachment {
+    return new ComplaintAttachment(json.complaint_id, json.image_url);
+  }
+}
+
+export default ComplaintAttachment;
