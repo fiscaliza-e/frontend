@@ -1,0 +1,10 @@
+{
+    "files.autoSave": "afterDelay",
+    "workbench.editor.decorations.colors": true,
+    "workbench.preferredDarkColorTheme": "Noctis Viola",
+    "editor.defaultFormatter": null,
+    "workbench.colorTheme": "Noctis Viola",
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredLightColorTheme": "Solarized Light",
+    "workbench.settings.editor": "ui"
+}
