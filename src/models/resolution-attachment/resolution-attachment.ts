@@ -15,7 +15,7 @@ class ResolutionAttachment {
   }
 
   static fromJSON(json: any): ResolutionAttachment {
-    return new ResolutionAttachment(json.resolutionId, json.imageUrl);
+    return new ResolutionAttachment(json.resolution_id, json.image_url);
   }
 }
 
