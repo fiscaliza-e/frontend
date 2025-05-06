@@ -1,0 +1,7 @@
+- Adress -> Address
+- o atributo number em adress é uma palavra reservada;
+- alguns ceps começam com 0 então precisa ser string;
+- É preciso manter latitude e longitude no banco?
+- Revisar campos NOT NULL
+- Manter nome das tabelas no singular para seguir um padrão
+- Especificar PK em resolution_attachments, complaint_attachments
