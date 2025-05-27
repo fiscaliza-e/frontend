@@ -7,7 +7,7 @@ function HelloWorld() {
 
   useEffect(() => {
     setTimeout(() => {
-      setMessage('Bem-vindo!');
+      setMessage('Hello World!');
     }, 1000);
   }, []);
 
