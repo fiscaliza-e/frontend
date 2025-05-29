@@ -1,0 +1,14 @@
+.headerContainer{
+    display: flex;
+    min-width: 400px;
+    width: 100vw;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    gap: 5;
+}
+
+.Logo {
+    min-width: max-content;
+    color: #ffd700;
+}

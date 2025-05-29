@@ -1,0 +1,52 @@
+.headerActionsContainer{
+    display: flex;
+    width: fit-content;
+    gap: 2rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* autenticado */
+.authenticatedUserActions{
+    display: flex;
+    width: fit-content;
+    gap: 2rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.viewComplaintButton{
+    min-width: 100px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem;
+}
+
+.userIcon{
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    background-color: lightgreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* nao autenticado */
+.signInButton, .signUpButton{
+    width: 100px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem;
+
+}
+
+.signInButton{
+    background-color: lightgreen;
+}
+.signUpButton{
+    background-color: lightcyan;
+}   
