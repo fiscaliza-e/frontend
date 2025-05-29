@@ -7,7 +7,7 @@ export default function Footer() {
         <a href="">Termos de Uso</a>
         <a href="">FAQ</a>
       </div>
-      <p className={styles.footerAllRight}>© 2025 FISCALIZA-e — Todos os direitos reservados.</p>
+      <p className={styles.footerRigthsText}>© 2025 FISCALIZA-e — Todos os direitos reservados.</p>
     </footer>
   );
 }

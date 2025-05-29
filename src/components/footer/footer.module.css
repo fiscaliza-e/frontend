@@ -1,5 +1,5 @@
 
-.footerConteiner{
+.footerConteiner { 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,27 +8,23 @@
     min-width: 400px;
 }
 
-.footerAnchorContainer{
+.footerAnchorContainer {
     display: flex;
-    font-family: sans-serif;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     font-size: 1.5rem;
-    font-weight: 100;
     width: 100%;
     background-color: #28947F;
     min-height: 80px;
-    padding: 1rem;
 }
 
-.footerAllRight{
+.footerRigthsText{
     background-color: #A1C852;
     display: flex;
     width: 100%;
     justify-content: center;
     font-size: 12px;
-    font-weight: normal ;
     align-items: center;
     padding: 0.3rem;
 }
