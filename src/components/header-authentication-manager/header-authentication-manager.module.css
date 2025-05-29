@@ -1,0 +1,58 @@
+.headerActionsContainer {
+    display: flex;
+    width: fit-content;
+    gap: 2rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.defaultButton {
+    min-width: 100px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem;
+    color: #ffffff
+}
+
+.authenticatedUserActions {
+    display: flex;
+    width: fit-content;
+    gap: 2rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.myComplaintsButton {
+    background-color: #4AA77C;
+}
+
+.userIconButton {
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    background-color: #C2CD4B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.userIcon {
+    justify-content: center;
+    color: #fff;
+    font-size: 2rem;
+}
+
+.signInButton {
+    background-color: #28947F;
+}
+
+.signUpButton {
+    background-color: #C2CD4B;
+}   
+
+.hoverButton:hover {
+    filter: brightness(1.1);
+    transition: filter 0.2s ease;
+}
