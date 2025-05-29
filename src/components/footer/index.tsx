@@ -2,7 +2,7 @@ import styles from "./footer.module.css";
 
 export default function Footer() {
   return (
-    <footer className={styles.footerConteiner}>
+    <footer className={styles.footerContainer}>
       <div className={styles.footerAnchorContainer}>
         <a href="">Termos de Uso</a>
         <a href="">FAQ</a>

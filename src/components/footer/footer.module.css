@@ -1,5 +1,5 @@
 
-.footerConteiner { 
+.footerContainer { 
     display: flex;
     flex-direction: column;
     justify-content: center;
