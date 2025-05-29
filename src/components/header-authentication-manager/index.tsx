@@ -1,15 +1,12 @@
 import styles from "./header-authentication-manager.module.css";
 import { UserOutlined } from "@ant-design/icons";
 
-type HeaderAuthenticationManagerProps = {
+interface Props {
   authenticated: boolean;
   onClick?: () => void;
 };
 
-export default function HeaderAuthenticationManager({
-  authenticated,
-  onClick,
-}: HeaderAuthenticationManagerProps) {
+export default function HeaderAuthenticationManager({authenticated, onClick}: Props) {
   return authenticated ? (
     <div className={styles.authenticatedUserActions}>
       <button

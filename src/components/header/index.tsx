@@ -14,13 +14,13 @@ export default function Header() {
     setAuthenticated((authenticated) => !authenticated);
   };
 
-  const handleGetHome = () => {
+  const handleNavigateToHome = () => {
     router.push("/");
   };
 
   return (
     <header className={styles.headerContainer}>
-      <h1 className={styles.Logo} onClick={handleGetHome}>
+      <h1 className={styles.logo} onClick={handleNavigateToHome}>
         FISCALIZA-e
       </h1>
       <HeaderAuthenticationManager
