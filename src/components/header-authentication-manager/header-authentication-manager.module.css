@@ -1,52 +1,58 @@
-.headerActionsContainer{
+.headerActionsContainer {
     display: flex;
     width: fit-content;
     gap: 2rem;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 }
 
-/* autenticado */
-.authenticatedUserActions{
-    display: flex;
-    width: fit-content;
-    gap: 2rem;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.viewComplaintButton{
+.defaultButton {
     min-width: 100px;
     border-radius: 6px;
     border: none;
     cursor: pointer;
     padding: 0.8rem;
+    color: #ffffff
 }
 
-.userIcon{
+.authenticatedUserActions {
+    display: flex;
+    width: fit-content;
+    gap: 2rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.myComplaintsButton {
+    background-color: #4AA77C;
+}
+
+.userIconButton {
     border-radius: 100%;
     width: 40px;
     height: 40px;
-    background-color: lightgreen;
+    background-color: #C2CD4B;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 }
 
-/* nao autenticado */
-.signInButton, .signUpButton{
-    width: 100px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    padding: 0.8rem;
-
+.userIcon {
+    justify-content: center;
+    color: #fff;
+    font-size: 2rem;
 }
 
-.signInButton{
-    background-color: lightgreen;
+.signInButton {
+    background-color: #28947F;
 }
-.signUpButton{
-    background-color: lightcyan;
+
+.signUpButton {
+    background-color: #C2CD4B;
 }   
+
+.hoverButton:hover {
+    filter: brightness(1.1);
+    transition: filter 0.2s ease;
+}

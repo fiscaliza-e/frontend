@@ -1,14 +1,21 @@
-.headerContainer{
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.headerContainer {
     display: flex;
     min-width: 400px;
     width: 100vw;
     justify-content: space-between;
     align-items: center;
     padding: 2rem 3rem;
-    gap: 5;
+    gap: 1rem;
 }
 
 .Logo {
+    font-family: "Anton";
     min-width: max-content;
     color: #ffd700;
+    letter-spacing: 3;
+    font-size: 2rem;
+    font-weight: 100;
+    cursor: pointer;
 }
