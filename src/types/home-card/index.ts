@@ -1,4 +1,4 @@
-interface homeCard {
+interface HomeCard {
   id: number;
   title: string;
   description: string;

@@ -9,11 +9,10 @@ export default function Home() {
     <>
       <div className={styles.homeContainer}>
         <h3 className={styles.homeTitle}>
-        Escolha a área da sua solicitação para começar ou entre com sua conta
-        para acompanhar seus protocolos.
-      </h3>
-      <div className={styles.homeCardContainer}>
-        <div className={styles.homeCards}>
+          Escolha a área da sua solicitação para começar ou entre com sua conta
+          para acompanhar seus protocolos.
+        </h3>
+        <div className={styles.homeCardContainer}>
           {data.map((card) => (
             <Card
               iconPath={card.iconPath}
@@ -23,7 +22,6 @@ export default function Home() {
             />
           ))}
         </div>
-      </div>
       </div>
     </>
   );

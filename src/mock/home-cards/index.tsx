@@ -1,4 +1,4 @@
-const homeCards: homeCard[] = [
+const homeCards: HomeCard[] = [
   {
     id: 1,
     title: "Iluminação",
