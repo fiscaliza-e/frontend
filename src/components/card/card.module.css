@@ -1,4 +1,4 @@
-.cardDefault{
+.card {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,28 +16,28 @@
     box-shadow: 0px 4px 4px 0px #00000040;
 }
 
-.cardDefault:hover{
+.card:hover {
     filter: brightness(1.1);
     transition: filter 0.2s ease;
 }
 
-.cardTextContent{
+.cardTextContent {
     display: flex;
     flex-direction: column;
     gap: 3;
     text-overflow: clip;
 }
 
-.cardTitle{
+.cardTitle {
     font-weight: bold;
     font-size: 18px;
 }
 
-.labelText{
+.description {
     font-size: 14px;
 }
 
-.iconCard{
+.cardIcon {
     height: 50px;
 }
 

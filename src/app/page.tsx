@@ -1,3 +1,4 @@
+"use client";
 import Card from "@/components/card";
 import "./globals.css";
 
@@ -7,8 +8,8 @@ export default function Home() {
       <Card
         iconPath="/icons/agua.svg"
         title="Água"
-        labelText="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-        onClick={() => ""}
+        description="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+        onClick={() => {}}
       />
     </>
   );
