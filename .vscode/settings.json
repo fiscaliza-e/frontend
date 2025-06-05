@@ -1,6 +1,7 @@
 {
     "files.autoSave": "afterDelay",
     "workbench.editor.decorations.colors": true,
-    "editor.defaultFormatter": null,
-    "window.autoDetectColorScheme": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "window.autoDetectColorScheme": true
 }
