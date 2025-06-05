@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
 
+import styles from "./form-login.module.css";
+
 export default function LoginForm() {
   const router = useRouter();
 
@@ -16,7 +18,7 @@ export default function LoginForm() {
     <Form
       name="login"
       initialValues={{ remember: true }}
-      style={{ minWidth: 360}}
+      style={{ minWidth: 360 }}
       onFinish={handleSubmit}
     >
       <Form.Item
@@ -31,7 +33,7 @@ export default function LoginForm() {
       >
         <Input prefix={<LockOutlined />} type="password" placeholder="Senha" />
       </Form.Item>
-      <Form.Item >
+      <Form.Item>
         <Flex justify="space-between" align="center">
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Lembrar credenciais</Checkbox>
@@ -41,7 +43,7 @@ export default function LoginForm() {
       </Form.Item>
 
       <Form.Item>
-        <Button block type="primary" htmlType="submit" color="green">
+        <Button  className={styles.formButton} block type="primary" htmlType="submit" color="green">
           Login
         </Button>
         ou <a href="/">Registre-se no Site</a>
