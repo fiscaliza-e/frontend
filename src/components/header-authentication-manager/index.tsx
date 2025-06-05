@@ -1,12 +1,23 @@
 import styles from "./header-authentication-manager.module.css";
 import { UserOutlined } from "@ant-design/icons";
 
+import { useRouter } from "next/navigation";
+
 interface Props {
   authenticated: boolean;
   onClick?: () => void;
-};
+}
 
-export default function HeaderAuthenticationManager({authenticated, onClick}: Props) {
+export default function HeaderAuthenticationManager({
+  authenticated,
+  onClick,
+}: Props) {
+  const router = useRouter();
+
+  const handleSignIn = () => {
+    router.push("/login");
+  };
+
   return authenticated ? (
     <div className={styles.authenticatedUserActions}>
       <button
@@ -31,9 +42,9 @@ export default function HeaderAuthenticationManager({authenticated, onClick}: Pr
           styles.hoverButton,
           styles.defaultButton,
         ].join(" ")}
-        onClick={onClick}
+        onClick={handleSignIn}
       >
-        Cadastrar
+        Entrar
       </button>
       <button
         className={[
@@ -43,7 +54,7 @@ export default function HeaderAuthenticationManager({authenticated, onClick}: Pr
         ].join(" ")}
         onClick={onClick}
       >
-        Entrar
+        Cadastrar
       </button>
     </div>
   );
