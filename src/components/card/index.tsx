@@ -1,22 +1,21 @@
-
+import { Flex } from "antd";
+import React from "react";
 
 import styles from "./card.module.css";
 
 interface Props {
   title: string;
-  description: string;
-  iconPath: string;
-  onClick: () => void;
+  titleClassName?: string;
+  children: React.ReactNode;
 }
 
-export default function Card({ title, description, iconPath, onClick }: Props) {
+const Card = ({ title, titleClassName, children }: Props) => {
   return (
-    <div className={styles.card} onClick={onClick}>
-      <div className={styles.cardTextContent}>
-        <p className={styles.cardTitle}>{title}</p>
-        <p className={styles.description}>{description}</p>
-      </div>
-      <img className={styles.cardIcon} src={iconPath} alt={title} />
-    </div>
+    <Flex className={styles.card} vertical>
+      <h3 className={titleClassName}>{title}</h3>
+      {children}
+    </Flex>
   );
-}
+};
+
+export default Card;

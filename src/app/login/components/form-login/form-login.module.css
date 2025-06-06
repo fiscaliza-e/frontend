@@ -1,0 +1,15 @@
+.loginForm {
+  min-width: 360px;
+  margin: 1rem;
+  color: #28947f;
+}
+
+.formButton {
+  margin: 0.8rem 0;
+  background-color: #28947f !important;
+}
+
+.formButton:hover {
+  filter: brightness(1.18);
+  transition: filter 0.2s ease;
+}

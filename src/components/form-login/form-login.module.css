@@ -1,8 +1,0 @@
-.formButton {
-    background-color: #28947F !important;
-}
-
-.formButton:hover {
-    filter: brightness(1.18);
-    transition: filter 0.2s ease;
-}
