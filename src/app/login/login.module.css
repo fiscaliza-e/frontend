@@ -1,36 +1,40 @@
 .loginContainer {
-    display: flex;
-    min-width: 360px;
-    width: 100vw;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-wrap: wrap-reverse;
-    min-height: 100%;
+  display: flex;
+  min-width: 360px;
+  width: 100vw;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap-reverse;
+  min-height: 100%;
 }
 
 .loginForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-width: 360px;
-    margin: 1rem;
-    color: #28947F
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 360px;
+  margin: 1rem;
+  color: #28947f;
 }
 
 .loginDescription {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    text-align: center;
-    min-height: 300px;
-    max-width: 360px;
-
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  min-height: 300px;
+  max-width: 360px;
 }
 
 .logo {
-    width: 150px;
-    height: 150px;
+  width: 150px;
+  height: 150px;
 }
 
+.formLayout {
+  border-radius: 6px;
+  padding: 2rem;
+  box-shadow: 0 0 20px 10px #f1eeee;
+}

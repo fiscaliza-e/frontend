@@ -14,8 +14,12 @@ export default function HeaderAuthenticationManager({
 }: Props) {
   const router = useRouter();
 
-  const handleSignIn = () => {
+  const handleLogin = () => {
     router.push("/login");
+  };
+
+  const handleRegister = () => {
+    router.push("/register");
   };
 
   return authenticated ? (
@@ -23,8 +27,8 @@ export default function HeaderAuthenticationManager({
       <button
         className={[
           styles.myComplaintsButton,
-          styles.hoverButton,
-          styles.defaultButton,
+          styles.hoverElement,
+          styles.defaultElement,
         ].join(" ")}
         onClick={onClick}
       >
@@ -36,26 +40,26 @@ export default function HeaderAuthenticationManager({
     </div>
   ) : (
     <div className={styles.headerActionsContainer}>
-      <button
+      <a
         className={[
-          styles.signInButton,
-          styles.hoverButton,
-          styles.defaultButton,
+          styles.signIn,
+          styles.hoverElement,
+          styles.defaultElement,
         ].join(" ")}
-        onClick={handleSignIn}
+        onClick={handleLogin}
       >
         Entrar
-      </button>
-      <button
+      </a>
+      <a
         className={[
-          styles.signUpButton,
-          styles.hoverButton,
-          styles.defaultButton,
+          styles.signUp,
+          styles.hoverElement,
+          styles.defaultElement,
         ].join(" ")}
-        onClick={onClick}
+        onClick={handleRegister}
       >
         Cadastrar
-      </button>
+      </a>
     </div>
   );
 }
