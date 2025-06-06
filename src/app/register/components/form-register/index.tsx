@@ -1,17 +1,18 @@
 import React from "react";
 
-import { Button, Flex, Form, Input } from "antd";
+import { Button, Flex, Form } from "antd";
 import { useForm } from "antd/es/form/Form";
 
 import styles from "./form-register.module.css";
-import AddressInfo from "./address-info";
-import PersonalInfo from "./personal-info";
-import AuthInfo from "./auth-info";
+import RegisterFormAddressInfo from "./address-info";
+import RegisterFormPersonalInfo from "./personal-info";
+import RegisterFormAuthInfo from "./auth-info";
+import classNames from "classnames";
 
 export default function FormRegister() {
   const [form] = useForm();
   return (
-    <Flex justify="center" align="center" style={{ maxWidth: "80vw" }}>
+    <Flex justify="center" align="center" className={styles.formContainer}>
       <Form
         form={form}
         className={styles.formLayout}
@@ -19,24 +20,22 @@ export default function FormRegister() {
         layout="vertical"
       >
         <h3 className={styles.formTitle}>Informe seus dados</h3>
-        <PersonalInfo />
-        <AddressInfo />
-        <AuthInfo />
-        <Form.Item
-          style={{ display: "flex", justifyContent: "center", width: "100%" }}
-        >
+        <RegisterFormPersonalInfo />
+        <RegisterFormAddressInfo />
+        <RegisterFormAuthInfo />
+        <Flex justify="center">
           <Button
-            className={[
+            className={classNames(
               styles.submitButton,
               styles.hoverButton,
-              styles.defaultButton,
-            ].join(" ")}
+              styles.defaultButton
+            )}
             type="primary"
             htmlType="submit"
           >
             Cadastrar
           </Button>
-        </Form.Item>
+        </Flex>
       </Form>
     </Flex>
   );

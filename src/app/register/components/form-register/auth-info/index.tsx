@@ -1,7 +1,8 @@
 import { Flex, Form, Input } from "antd";
 
 import styles from "../form-register.module.css";
-export default function AuthInfo() {
+
+export default function RegisterFormAuthInfo() {
   return (
     <Flex vertical className={styles.formSection}>
       <p> Dados de autenticação </p>

@@ -1,9 +1,6 @@
 .headerActionsContainer {
-  display: flex;
   width: fit-content;
   gap: 1rem;
-  justify-content: space-evenly;
-  align-items: center;
 }
 
 .defaultElement {
@@ -45,8 +42,8 @@
   font-size: 2rem;
 }
 
-.signIn,
-.signUp {
+.loginText,
+.registerText {
   color: #28947f;
 }
 

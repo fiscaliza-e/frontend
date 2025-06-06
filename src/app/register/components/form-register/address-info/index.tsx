@@ -1,30 +1,26 @@
 import { Flex, Form, Input } from "antd";
+import classNames from "classnames";
 
 import styles from "../form-register.module.css";
 
-export default function AddressInfo() {
+export default function RegisterFormAddressInfo() {
   return (
     <Flex vertical className={styles.formSection}>
       <p> Endereço </p>
-      <Flex
-        style={{ flexWrap: "wrap", maxWidth: "100%" }}
-        justify="space-around"
-      >
+      <Flex wrap className={styles.addressInput} justify="space-around">
         <Form.Item
-          className={styles.formItem}
+          className={classNames(styles.formItem, styles.cepInput)}
           label="CEP"
           name="cep"
-          style={{ maxWidth: "70px" }}
           rules={[{ required: true, message: "Informe o CEP" }]}
         >
           <Input onChange={() => {}} />
         </Form.Item>
 
         <Form.Item
-          className={styles.formItem}
+          className={classNames(styles.formItem, styles.numberInput)}
           label="Nº"
           name="number"
-          style={{ maxWidth: "70px" }}
           rules={[
             {
               required: true,
@@ -35,10 +31,9 @@ export default function AddressInfo() {
           <Input />
         </Form.Item>
         <Form.Item
-          className={styles.formItem}
-          style={{ minWidth: "400px" }}
+          className={classNames(styles.formItem, styles.streetInput)}
           label="Rua"
-          name="rua"
+          name="street"
           rules={[{ required: true, message: "Rua não encontrada" }]}
         >
           <Input disabled />

@@ -2,7 +2,7 @@ import { Flex, Form, Input } from "antd";
 
 import styles from "../form-register.module.css";
 
-export default function PersonalInfo() {
+export default function RegisterFormPersonalInfo() {
   return (
     <Flex vertical className={styles.formSection}>
       <p> Dados pessoais </p>

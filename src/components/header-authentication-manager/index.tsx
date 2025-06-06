@@ -1,5 +1,7 @@
 import styles from "./header-authentication-manager.module.css";
 import { UserOutlined } from "@ant-design/icons";
+import { Flex } from "antd";
+import classNames from "classnames";
 
 import { useRouter } from "next/navigation";
 
@@ -25,41 +27,45 @@ export default function HeaderAuthenticationManager({
   return authenticated ? (
     <div className={styles.authenticatedUserActions}>
       <button
-        className={[
+        className={classNames(
           styles.myComplaintsButton,
           styles.hoverElement,
-          styles.defaultElement,
-        ].join(" ")}
+          styles.defaultElement
+        )}
         onClick={onClick}
       >
         Ver minhas solicitações
       </button>
-      <div className={[styles.userIconButton, styles.hoverButton].join(" ")}>
+      <div className={classNames(styles.userIconButton, styles.hoverButton)}>
         <UserOutlined className={styles.userIcon} />
       </div>
     </div>
   ) : (
-    <div className={styles.headerActionsContainer}>
+    <Flex
+      justify="space-evenly"
+      align="center"
+      className={styles.headerActionsContainer}
+    >
       <a
-        className={[
-          styles.signIn,
+        className={classNames(
+          styles.loginText,
           styles.hoverElement,
-          styles.defaultElement,
-        ].join(" ")}
+          styles.defaultElement
+        )}
         onClick={handleLogin}
       >
         Entrar
       </a>
       <a
-        className={[
-          styles.signUp,
+        className={classNames(
+          styles.registerText,
           styles.hoverElement,
-          styles.defaultElement,
-        ].join(" ")}
+          styles.defaultElement
+        )}
         onClick={handleRegister}
       >
         Cadastrar
       </a>
-    </div>
+    </Flex>
   );
 }
