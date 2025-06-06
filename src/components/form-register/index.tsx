@@ -27,7 +27,7 @@ export default function FormRegister() {
         >
           <Button
             className={[
-              styles.signUpButton,
+              styles.submitButton,
               styles.hoverButton,
               styles.defaultButton,
             ].join(" ")}
