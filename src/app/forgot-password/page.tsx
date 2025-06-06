@@ -14,7 +14,7 @@ export default function ForgotPassword() {
         className={styles.cardDescription}
         onFinish={() => {}}
       >
-        <Flex vertical style={{ minWidth: 360 }}>
+        <Flex vertical className={styles.cardDescription}>
           <p>
             Para recuperar sua senha, insira o e-mail informado ao se cadastrar.
           </p>
