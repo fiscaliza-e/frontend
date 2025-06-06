@@ -1,7 +1,7 @@
 import { Flex } from "antd";
 import React from "react";
 
-import styles from "./test-card.module.css";
+import styles from "./card.module.css";
 
 interface Props {
   title: string;

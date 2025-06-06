@@ -8,7 +8,7 @@ import RegisterFormAddressInfo from "./address-info";
 import RegisterFormPersonalInfo from "./personal-info";
 import RegisterFormAuthInfo from "./auth-info";
 import classNames from "classnames";
-import Card from "@/components/test-card";
+import Card from "@/components/card";
 
 export default function FormRegister() {
   const [form] = useForm();

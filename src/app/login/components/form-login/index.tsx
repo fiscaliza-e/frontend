@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
 
 import styles from "./form-login.module.css";
-import Card from "@/components/test-card";
+import Card from "@/components/card";
 
 export default function LoginForm() {
   const router = useRouter();
