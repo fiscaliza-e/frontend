@@ -1,6 +1,4 @@
-
-
-import styles from "./card.module.css";
+import styles from "./navigation-card.module.css";
 
 interface Props {
   title: string;
@@ -9,7 +7,12 @@ interface Props {
   onClick: () => void;
 }
 
-export default function Card({ title, description, iconPath, onClick }: Props) {
+export default function NavigationCard({
+  title,
+  description,
+  iconPath,
+  onClick,
+}: Props) {
   return (
     <div className={styles.card} onClick={onClick}>
       <div className={styles.cardTextContent}>

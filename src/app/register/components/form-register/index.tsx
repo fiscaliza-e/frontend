@@ -8,18 +8,13 @@ import RegisterFormAddressInfo from "./address-info";
 import RegisterFormPersonalInfo from "./personal-info";
 import RegisterFormAuthInfo from "./auth-info";
 import classNames from "classnames";
+import Card from "@/components/test-card";
 
 export default function FormRegister() {
   const [form] = useForm();
   return (
-    <Flex justify="center" align="center" className={styles.formContainer}>
-      <Form
-        form={form}
-        className={styles.formLayout}
-        initialValues={{ variant: "filled" }}
-        layout="vertical"
-      >
-        <h3 className={styles.formTitle}>Informe seus dados</h3>
+    <Card title="Register">
+      <Form form={form} initialValues={{ variant: "filled" }} layout="vertical">
         <RegisterFormPersonalInfo />
         <RegisterFormAddressInfo />
         <RegisterFormAuthInfo />
@@ -37,6 +32,6 @@ export default function FormRegister() {
           </Button>
         </Flex>
       </Form>
-    </Flex>
+    </Card>
   );
 }

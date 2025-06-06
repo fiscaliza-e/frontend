@@ -2,11 +2,6 @@
   max-width: 80vw;
 }
 
-.formTitle {
-  margin: 0.5rem 0;
-  color: #c2cd4b;
-}
-
 .formSection {
   display: flex;
   color: #bdbbbb;
@@ -19,22 +14,12 @@
 
 .submitButton {
   width: 200px !important;
-  background-color: #c2cd4b !important;
+  background-color: #28947f;
 }
 
 .hoverButton:hover {
   filter: brightness(1.1);
   transition: filter 0.2s ease;
-}
-
-.formLayout {
-  max-width: 800px;
-  min-width: 300px;
-  border-radius: 6px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 0 20px 10px #f1eeee;
-  gap: 1rem;
 }
 
 .formItem {

@@ -1,5 +1,5 @@
 "use client";
-import Card from "@/components/card";
+import Card from "@/components/navigation-card";
 import data from "@/mock/home-cards";
 import styles from "./page.module.css";
 import "./globals.css";

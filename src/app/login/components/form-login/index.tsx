@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
 
 import styles from "./form-login.module.css";
+import Card from "@/components/test-card";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -24,8 +25,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Flex vertical className={classNames(styles.loginForm, styles.formLayout)}>
-      <h1>Entrar</h1>
+    <Card title="Login" titleClassName={styles.loginTitle}>
       <Form
         name="login"
         initialValues={{ remember: true }}
@@ -68,6 +68,6 @@ export default function LoginForm() {
           ou <a onClick={handleRegister}>Registre-se no Site</a>
         </Form.Item>
       </Form>
-    </Flex>
+    </Card>
   );
 }

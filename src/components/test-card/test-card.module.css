@@ -1,0 +1,10 @@
+.card {
+  max-width: 800px;
+  min-width: 300px;
+  border-radius: 6px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 20px 10px #f1eeee;
+  gap: 1rem;
+  color: #28947f;
+}
