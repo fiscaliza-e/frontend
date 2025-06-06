@@ -21,7 +21,7 @@ export default function RegisterFormAuthInfo() {
           name="password"
           rules={[{ required: true, message: "Digite sua senha" }]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
         <Form.Item
           className={styles.formItem}
@@ -29,7 +29,7 @@ export default function RegisterFormAuthInfo() {
           name="confirm-password"
           rules={[{ required: true, message: "As senhas devem ser iguais" }]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
       </Flex>
     </Flex>

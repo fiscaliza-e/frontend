@@ -22,7 +22,7 @@ export default function LoginForm() {
   const handleRegister = () => {
     router.push("/register");
   };
-  
+
   return (
     <Flex vertical className={classNames(styles.loginForm, styles.formLayout)}>
       <h1>Entrar</h1>
@@ -44,11 +44,7 @@ export default function LoginForm() {
           name="password"
           rules={[{ required: true, message: "Por favor, informe sua senha!" }]}
         >
-          <Input
-            prefix={<LockOutlined />}
-            type="password"
-            placeholder="Senha"
-          />
+          <Input.Password prefix={<LockOutlined />} placeholder="Senha" />
         </Form.Item>
         <Form.Item>
           <Flex justify="space-between" align="center">
