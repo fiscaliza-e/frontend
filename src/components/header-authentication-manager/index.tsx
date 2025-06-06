@@ -1,5 +1,7 @@
 import styles from "./header-authentication-manager.module.css";
 import { UserOutlined } from "@ant-design/icons";
+import { Flex } from "antd";
+import classNames from "classnames";
 
 import { useRouter } from "next/navigation";
 
@@ -14,48 +16,56 @@ export default function HeaderAuthenticationManager({
 }: Props) {
   const router = useRouter();
 
-  const handleSignIn = () => {
+  const handleLogin = () => {
     router.push("/login");
+  };
+
+  const handleRegister = () => {
+    router.push("/register");
   };
 
   return authenticated ? (
     <div className={styles.authenticatedUserActions}>
       <button
-        className={[
+        className={classNames(
           styles.myComplaintsButton,
-          styles.hoverButton,
-          styles.defaultButton,
-        ].join(" ")}
+          styles.hoverElement,
+          styles.defaultElement
+        )}
         onClick={onClick}
       >
         Ver minhas solicitações
       </button>
-      <div className={[styles.userIconButton, styles.hoverButton].join(" ")}>
+      <div className={classNames(styles.userIconButton, styles.hoverButton)}>
         <UserOutlined className={styles.userIcon} />
       </div>
     </div>
   ) : (
-    <div className={styles.headerActionsContainer}>
-      <button
-        className={[
-          styles.signInButton,
-          styles.hoverButton,
-          styles.defaultButton,
-        ].join(" ")}
-        onClick={handleSignIn}
+    <Flex
+      justify="space-evenly"
+      align="center"
+      className={styles.headerActionsContainer}
+    >
+      <a
+        className={classNames(
+          styles.loginText,
+          styles.hoverElement,
+          styles.defaultElement
+        )}
+        onClick={handleLogin}
       >
         Entrar
-      </button>
-      <button
-        className={[
-          styles.signUpButton,
-          styles.hoverButton,
-          styles.defaultButton,
-        ].join(" ")}
-        onClick={onClick}
+      </a>
+      <a
+        className={classNames(
+          styles.registerText,
+          styles.hoverElement,
+          styles.defaultElement
+        )}
+        onClick={handleRegister}
       >
         Cadastrar
-      </button>
-    </div>
+      </a>
+    </Flex>
   );
 }
