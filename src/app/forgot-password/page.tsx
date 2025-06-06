@@ -11,7 +11,7 @@ export default function ForgotPassword() {
       <Form
         name="forgotPassword"
         initialValues={{ remember: true }}
-        style={{ minWidth: 300 }}
+        className={styles.cardDescription}
         onFinish={() => {}}
       >
         <Flex vertical style={{ minWidth: 360 }}>
@@ -22,7 +22,7 @@ export default function ForgotPassword() {
 
         <Form.Item
           name="email"
-          style={{ marginTop: "1rem" }}
+          className={styles.emailInput}
           rules={[
             { required: true, message: "Por favor, informe um email valido!" },
           ]}
