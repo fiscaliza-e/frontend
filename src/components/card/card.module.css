@@ -7,14 +7,16 @@
     background-color: #cfcbcb;
 
     width: 300px;
-    height: 80px;
-    padding: 3.2rem 1rem;
+    height: auto; 
+    padding: 1rem 1.5rem; 
     border-radius: 6px;
     cursor: pointer;
-    gap: 3rem;
+    gap: 1rem;
+    min-height: 125px;
 
     box-shadow: 0px 4px 4px 0px #00000040;
 }
+
 
 .card:hover {
     filter: brightness(1.1);
@@ -38,6 +40,6 @@
 }
 
 .cardIcon {
-    height: 50px;
+    height: 60px;
 }
 
