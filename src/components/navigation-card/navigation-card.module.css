@@ -7,8 +7,8 @@
     background-color: #cfcbcb;
 
     width: 300px;
-    height: 80px;
-    padding: 3.2rem 1rem;
+    height: 125px;
+    padding: 1rem 1.5rem;
     border-radius: 6px;
     cursor: pointer;
     gap: 3rem;
@@ -40,4 +40,3 @@
 .cardIcon {
     height: 50px;
 }
-
