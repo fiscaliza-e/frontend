@@ -1,4 +1,5 @@
 import styles from "./navigation-card.module.css";
+import Image from "next/image";
 
 interface Props {
   title: string;
@@ -19,7 +20,15 @@ export default function NavigationCard({
         <p className={styles.cardTitle}>{title}</p>
         <p className={styles.description}>{description}</p>
       </div>
-      <img className={styles.cardIcon} src={iconPath} alt={title} />
+      <div className={styles.cardIcon}>
+        <Image
+          src={iconPath}
+          alt={title}
+          className={styles.iconImage}
+          width={48}
+          height={48}
+        />
+      </div>
     </div>
   );
 }

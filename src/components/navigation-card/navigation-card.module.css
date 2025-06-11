@@ -1,42 +1,63 @@
 .card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    color: #fff;
-    background-color: #cfcbcb;
+  background-color: #ffffff;
+  border: 2px solid #c2cd4b;
+  border-radius: 6px;
 
-    width: 300px;
-    height: 125px;
-    padding: 1rem 1.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    gap: 3rem;
+  width: 350px;
+  height: 125px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  gap: 3rem;
 
-    box-shadow: 0px 4px 4px 0px #00000040;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .card:hover {
-    filter: brightness(1.1);
-    transition: filter 0.2s ease;
+  filter: brightness(1.1);
+  transition: filter 0.2s ease;
 }
 
 .cardTextContent {
-    display: flex;
-    flex-direction: column;
-    gap: 3;
-    text-overflow: clip;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  line-height: 1.2;
+  padding-bottom: 0.2rem;
 }
 
 .cardTitle {
-    font-weight: bold;
-    font-size: 18px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #c2cd4b;
+  margin-bottom: 0.3rem;
 }
 
 .description {
-    font-size: 14px;
+  font-size: 14px;
+  color: #333333;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .cardIcon {
-    height: 50px;
+  background-color: #c2cd4b;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  overflow: hidden; 
+}
+
+.iconImage {
+  width: 60%;
+  height: auto;
+  object-fit: contain;
 }
