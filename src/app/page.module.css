@@ -9,9 +9,8 @@
 
 .homeTitle {
   text-align: center;
+  text-wrap: 1;
   max-width: 60%;
-  font-size: 1.4rem;
-  line-height: 1.5;
 }
 
 .homeCardContainer {

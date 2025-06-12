@@ -24,6 +24,10 @@ export default function HeaderAuthenticationManager({
     router.push("/register");
   };
 
+  const handleNavigateToMyComplaints = () => {
+    router.push("/user/my-complaints");
+  };
+
   return authenticated ? (
     <div className={styles.authenticatedUserActions}>
       <button
@@ -32,7 +36,7 @@ export default function HeaderAuthenticationManager({
           styles.hoverElement,
           styles.defaultElement
         )}
-        onClick={onClick}
+        onClick={handleNavigateToMyComplaints}
       >
         Ver minhas solicitações
       </button>
