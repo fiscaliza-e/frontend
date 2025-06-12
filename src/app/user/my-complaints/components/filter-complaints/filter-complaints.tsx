@@ -14,6 +14,7 @@ export default function FilterComplaints({ onChange }: Props) {
         {options.map((option, index) => (
           <Flex>
             <input
+              key={index}
               id={option.id}
               name="filters"
               type="radio"
