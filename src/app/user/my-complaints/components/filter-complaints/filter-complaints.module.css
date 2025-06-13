@@ -1,0 +1,39 @@
+.filters {
+  width: 80vw;
+  background-color: #fff;
+  padding-bottom: 1.5rem;
+}
+
+.filterComplaints {
+  width: 40%;
+  border-radius: 12px;
+  box-shadow: 2px 2px 5px #f1eeee;
+}
+
+.filterRadio {
+  display: none;
+}
+
+.filterLabel {
+  padding: 0.3rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + .filterLabel {
+  transition: 0.6s allow-discrete;
+  background-color: #28947f;
+  color: #fff;
+}
+
+input[value="forwarded"]:checked + .filterLabel {
+  background-color: #28947f;
+}
+
+input[value="pending"]:checked + .filterLabel {
+  background-color: #ffd700 !important;
+}
+
+input[value="resolved"]:checked + .filterLabel {
+  background-color: #c2cd4b !important;
+}

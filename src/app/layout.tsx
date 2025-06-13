@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import Header from "@/components/header";
@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <main>{children}</main>
+        {children}
         <Footer />
       </body>
     </html>
