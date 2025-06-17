@@ -1,10 +1,7 @@
 .ComplaintsContainer {
   width: 100vw;
-  height: 500px;
-  overflow-y: auto;
   justify-content: flex-start;
-  padding-top: 1rem;
-}
+  }
 
 .cardTextContent {
   width: 80%;
