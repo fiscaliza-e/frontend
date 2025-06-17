@@ -9,27 +9,10 @@ export default function ProfileFormAuthInfo() {
       <Flex>
         <Form.Item
           className={styles.formItem}
-          label="Email atual"
+          label="Email"
           name="email"
         >
           <Input />
-        </Form.Item>
-
-        <Form.Item
-          className={styles.formItem}
-          label="Novo email"
-          name="new email"
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          className={styles.formItem}
-          label="Senha"
-          name="confirm-password"
-          rules={[{ required: true, message: "A senha deve ser a mesma registrada no cadastro!" }]}
-        >
-          <Input.Password />
         </Form.Item>
       </Flex>
     </Flex>
