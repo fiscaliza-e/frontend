@@ -6,9 +6,8 @@ import HeaderAuthenticationManager from "../header-authentication-manager";
 import styles from "./header.module.css";
 
 export default function Header() {
-  const [authenticated, setAuthenticated] = useState(false);
-  const router = useRouter()
-
+  const [authenticated, setAuthenticated] = useState(true);
+  const router = useRouter();
 
   const handleAuthentication = () => {
     setAuthenticated((authenticated) => !authenticated);
