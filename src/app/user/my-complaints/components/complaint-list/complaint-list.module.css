@@ -1,5 +1,6 @@
 .ComplaintsContainer {
   width: 100vw;
+  min-height: 70vh;
   justify-content: flex-start;
   }
 
