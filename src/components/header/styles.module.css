@@ -2,18 +2,17 @@
 
 .headerContainer {
     display: flex;
+    justify-content: space-between;
     min-width: 400px;
     width: 100vw;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    gap: 1rem;
+    padding: 1rem 4rem;
 }
 
 .logo {
     font-family: "Anton";
     min-width: max-content;
-    color: #ffd700;
+    color: var(--color-primary);;
     letter-spacing: 3;
     font-size: 2rem;
     font-weight: 100;

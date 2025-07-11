@@ -3,33 +3,21 @@
   gap: 1rem;
 }
 
-.defaultElement {
-  min-width: 100px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  padding: 0.8rem;
-  color: #ffffff;
-  text-align: center;
-}
-
 .authenticatedUserActions {
-  display: flex;
   width: fit-content;
   gap: 2rem;
-  justify-content: space-around;
-  align-items: center;
 }
 
 .myComplaintsButton {
-  background-color: #4aa77c;
+  background-color: var(--color-primary);
+  height: 40px;
 }
 
 .userIconButton {
   border-radius: 100%;
   width: 40px;
   height: 40px;
-  background-color: #c2cd4b;
+  background-color: var(--color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,12 +27,12 @@
 .userIcon {
   justify-content: center;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .loginText,
 .registerText {
-  color: #28947f;
+  color: var(--color-primary);;
 }
 
 .hoverElement:hover {

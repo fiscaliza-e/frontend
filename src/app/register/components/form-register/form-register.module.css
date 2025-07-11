@@ -14,7 +14,7 @@
 
 .submitButton {
   width: 200px !important;
-  background-color: #28947f;
+  background-color: var(--color-primary);;
 }
 
 .hoverButton:hover {

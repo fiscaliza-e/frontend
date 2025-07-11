@@ -34,7 +34,7 @@
 }
 
 .cardComplaint[data-status="forwarded"] {
-  border: 2px solid #28947f;
+  border: 2px solid var(--color-primary);;
 }
 
 .cardComplaint[data-status="pending"] {
@@ -46,7 +46,7 @@
 }
 
 .cardComplaint[data-status="forwarded"] .textElement {
-  color: #28947f !important;
+  color: var(--color-primary) !important;
 }
 
 .cardComplaint[data-status="pending"] .textElement {

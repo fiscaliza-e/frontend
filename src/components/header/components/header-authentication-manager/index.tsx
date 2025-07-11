@@ -1,6 +1,6 @@
-import styles from "./header-authentication-manager.module.css";
+import styles from "./styles.module.css";
 import { UserOutlined } from "@ant-design/icons";
-import { Flex } from "antd";
+import { Button, Flex } from "antd";
 import classNames from "classnames";
 
 import { useRouter } from "next/navigation";
@@ -25,25 +25,22 @@ export default function HeaderAuthenticationManager({
   };
 
   const handleNavigateToMyComplaints = () => {
-    router.push("/user/my-complaints");
+    router.push("/user/complaints");
   };
 
   return authenticated ? (
-    <div className={styles.authenticatedUserActions}>
-      <button
-        className={classNames(
-          styles.myComplaintsButton,
-          styles.hoverElement,
-          styles.defaultElement
-        )}
+    <Flex className={styles.authenticatedUserActions} justify="space-around" align="center">
+      <Button
+        className={styles.myComplaintsButton}
         onClick={handleNavigateToMyComplaints}
+        type="primary"
       >
         Ver minhas solicitações
-      </button>
-      <div className={classNames(styles.userIconButton, styles.hoverButton)}>
+      </Button>
+      <Flex className={classNames(styles.userIconButton, styles.hoverButton)}>
         <UserOutlined className={styles.userIcon} />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   ) : (
     <Flex
       justify="space-evenly"
@@ -51,11 +48,7 @@ export default function HeaderAuthenticationManager({
       className={styles.headerActionsContainer}
     >
       <a
-        className={classNames(
-          styles.loginText,
-          styles.hoverElement,
-          styles.defaultElement
-        )}
+        className={styles.loginText}
         onClick={handleLogin}
       >
         Entrar

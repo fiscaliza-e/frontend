@@ -1,12 +1,12 @@
 .loginForm {
   min-width: 360px;
   margin: 1rem;
-  color: #28947f;
+  color: var(--color-primary);;
 }
 
 .formButton {
   margin: 0.8rem 0;
-  background-color: #28947f !important;
+  background-color: var(--color-primary) !important;
 }
 
 .formButton:hover {

@@ -1,4 +1,5 @@
-import styles from "./navigation-card.module.css";
+import { Flex } from "antd";
+import styles from "./styles.module.css";
 import Image from "next/image";
 
 interface Props {
@@ -8,27 +9,27 @@ interface Props {
   onClick: () => void;
 }
 
-export default function NavigationCard({
+export default function HomeNavigationCard({
   title,
   description,
   iconPath,
   onClick,
 }: Props) {
   return (
-    <div className={styles.card} onClick={onClick}>
-      <div className={styles.cardTextContent}>
+    <Flex className={styles.card} onClick={onClick} justify="space-between" align="center">
+      <Flex className={styles.cardTextContent} justify="center">
         <p className={styles.cardTitle}>{title}</p>
         <p className={styles.description}>{description}</p>
-      </div>
-      <div className={styles.cardIcon}>
+      </Flex>
+      <Flex className={styles.cardIcon} align="center" justify="center">
         <Image
           src={iconPath}
           alt={title}
           className={styles.iconImage}
-          width={48}
-          height={48}
+          width={40}
+          height={40}
         />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 }

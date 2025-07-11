@@ -1,31 +1,30 @@
 
 .footerContainer { 
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100vw;
-    min-width: 400px;
 }
 
 .footerAnchorContainer {
-    display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     font-size: 1.5rem;
     width: 100%;
-    background-color: #28947F;
+    background-color: var(--color-primary);;
     min-height: 80px;
 }
 
 .footerRigthsText {
-    background-color: #A1C852;
-    display: flex;
+    background-color: var(--color-primary);;
     width: 100%;
     justify-content: center;
     font-size: 12px;
     align-items: center;
     padding: 0.3rem;
+    text-align: center;
+    color: white;
 }
 
+.navigationLink {
+    color: white;
+}

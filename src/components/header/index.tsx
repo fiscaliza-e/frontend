@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import HeaderAuthenticationManager from "../header-authentication-manager";
+import HeaderAuthenticationManager from "./components/header-authentication-manager";
 
-import styles from "./header.module.css";
+import styles from "./styles.module.css";
 
 export default function Header() {
   const [authenticated, setAuthenticated] = useState(true);
@@ -23,7 +23,7 @@ export default function Header() {
         FISCALIZA-e
       </h1>
       <HeaderAuthenticationManager
-        authenticated={authenticated}
+        authenticated={true}
         onClick={handleAuthentication}
       />
     </header>

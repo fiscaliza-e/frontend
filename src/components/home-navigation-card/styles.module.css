@@ -1,13 +1,10 @@
 .card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
   background-color: #ffffff;
-  border: 2px solid #c2cd4b;
+  border: 1.2px solid var(--color-primary);
   border-radius: 6px;
 
-  width: 350px;
+  width: 100%;
+  max-width: 350px; /* Limita o tamanho */
   height: 125px;
   padding: 1rem 1.5rem;
   cursor: pointer;
@@ -22,9 +19,7 @@
 }
 
 .cardTextContent {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
   flex-grow: 1;
   line-height: 1.2;
   padding-bottom: 0.2rem;
@@ -33,7 +28,7 @@
 .cardTitle {
   font-weight: bold;
   font-size: 18px;
-  color: #c2cd4b;
+  color: var(--color-primary);
   margin-bottom: 0.3rem;
 }
 
@@ -45,19 +40,14 @@
 }
 
 .cardIcon {
-  background-color: #c2cd4b;
+  background-color: var(--color-primary);
   border-radius: 50%;
   width: 80px;
   height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-shrink: 0;
   overflow: hidden; 
 }
 
 .iconImage {
-  width: 60%;
-  height: auto;
   object-fit: contain;
 }

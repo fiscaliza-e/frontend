@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Typography } from "antd";
 const { Title, Text } = Typography;
 
-import styles from "./complaint-list.module.css";
+import styles from "./styles.module.css";
 import complaints from "@/mock/complaints";
 import classNames from "classnames";
 
@@ -30,7 +30,7 @@ export default function ComplaintList(props: Props) {
             data-status={complaint.status}
             className={classNames(styles.cardComplaint, styles.elementHover)}
             key={complaint.id}
-            href={`/user/my-complaints/${complaint.id}`}
+            href={`/user/complaints/${complaint.id}`}
           >
             <Flex justify="space-between" align="center">
               <Title level={2} className={styles.textElement}>

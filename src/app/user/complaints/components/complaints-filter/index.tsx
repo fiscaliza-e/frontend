@@ -1,5 +1,5 @@
 import { Flex } from "antd";
-import styles from "./filter-complaints.module.css";
+import styles from "./styles.module.css";
 
 import options from "@/mock/filter-options/index";
 
@@ -7,12 +7,12 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export default function FilterComplaints({ onChange }: Props) {
+export default function ComplaintsFilter({ onChange }: Props) {
   return (
     <Flex vertical justify="center" className={styles.filters}>
       <Flex justify="space-between" className={styles.filterComplaints}>
         {options.map((option, index) => (
-          <Flex>
+          <Flex key={option.id}>
             <input
               key={index}
               id={option.id}
