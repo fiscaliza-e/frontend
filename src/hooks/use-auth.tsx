@@ -158,7 +158,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           ...prev,
           user: response.data,
           isLoading: false,
-        }));
+        } as AuthState));
       } else {
         throw new Error(response.message || 'Erro ao atualizar perfil');
       }
