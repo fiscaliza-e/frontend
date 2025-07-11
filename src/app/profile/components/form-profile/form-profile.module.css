@@ -1,0 +1,52 @@
+.formContainer {
+  max-width: 80vw;
+}
+
+.formSection {
+  color: #bdbbbb;
+  min-width: 200px;
+}
+
+.formSection p {
+  margin: 0.5rem 0;
+}
+
+.submitButton {
+  width: 200px !important;
+  background-color: #28947f;
+}
+
+.cancelButton {
+  width: 200px !important;
+  background-color: #d0d6d5;
+  margin-right: 20px;
+}
+
+.hoverButton:hover {
+  filter: brightness(1.1);
+  transition: filter 0.2s ease;
+}
+
+.formItem {
+  flex-wrap: wrap;
+  margin-inline: 1rem;
+  width: 200px;
+  min-width: 100px;
+}
+
+.addressInput {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.cepInput {
+  max-width: 10px !important;
+}
+
+.numberInput {
+  max-width: 70px;
+}
+
+.streetInput {
+  min-width: 400px;
+}
