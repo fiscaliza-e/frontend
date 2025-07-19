@@ -1,4 +1,5 @@
 import { apiClient, ApiResponse } from '../lib/api-client';
+import { storageUtils } from '../lib/storage-utils';
 import { 
   LoginRequest, 
   RegisterRequest, 
@@ -9,18 +10,24 @@ import {
 class AuthService {
   private readonly baseUrl = '/auth';
 
-  async login(credentials: LoginRequest): Promise<AuthResponse> {
+  async login(credentials: LoginRequest): Promise<{ user: any; token: string; refreshToken: string }> {
     try {
-      const response = await apiClient.post<AuthResponse>(
+      const response = await apiClient.post<any>(
         `${this.baseUrl}/login`,
         credentials
       );
-
-      if (response.success && response.data?.token) {
-        apiClient.setToken(response.data.token);
+      
+      if (response.access_token && response.user) {
+        const refreshToken = response.refresh_token || response.access_token;
+        apiClient.setTokens(response.access_token, refreshToken);
+        return { 
+          user: response.user, 
+          token: response.access_token,
+          refreshToken: refreshToken
+        };
+      } else {
+        throw new Error('Resposta de login inválida');
       }
-
-      return response;
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Erro ao fazer login');
     }
@@ -34,7 +41,8 @@ class AuthService {
       );
 
       if (response.success && response.data?.token) {
-        apiClient.setToken(response.data.token);
+        const refreshToken = response.data.refreshToken || response.data.token;
+        apiClient.setTokens(response.data.token, refreshToken);
       }
 
       return response;
@@ -45,10 +53,40 @@ class AuthService {
 
   async logout(): Promise<void> {
     try {
-      await apiClient.post(`${this.baseUrl}/logout`);
+      const refreshToken = this.getRefreshToken();
+      if (refreshToken) {
+        await apiClient.post(`${this.baseUrl}/logout`, { refreshToken });
+      }
     } catch (error) {
     } finally {
       apiClient.logout();
+    }
+  }
+
+  async refreshToken(): Promise<{ token: string; refreshToken: string } | null> {
+    try {
+      const refreshToken = this.getRefreshToken();
+      if (!refreshToken) {
+        return null;
+      }
+
+      const response = await apiClient.post<any>(
+        `${this.baseUrl}/refresh`,
+        { refreshToken }
+      );
+
+      if (response.access_token) {
+        const newRefreshToken = response.refresh_token || response.access_token;
+        apiClient.setTokens(response.access_token, newRefreshToken);
+        return {
+          token: response.access_token,
+          refreshToken: newRefreshToken
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('Erro ao renovar token:', error);
+      return null;
     }
   }
 
@@ -124,6 +162,13 @@ class AuthService {
 
   isAuthenticated(): boolean {
     return apiClient.isAuthenticated();
+  }
+
+  private getRefreshToken(): string | null {
+    if (typeof window !== 'undefined') {
+      return storageUtils.getItem('refresh_token');
+    }
+    return null;
   }
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { Flex } from "antd";
+import { AuthGuard } from "@/components/auth-guard";
 
 import styles from "./page.module.css";
 import ComplaintsFilter from "./components/complaints-filter";
@@ -15,14 +16,16 @@ export default function Complaints() {
   };
 
   return (
-    <Flex
-      vertical
-      justify="center"
-      align="center"
-      className={styles.mainContainer}
-    >
-      <ComplaintsFilter onChange={handleSetStatus} />
-      <ComplaintsList status={status} />
-    </Flex>
+    <AuthGuard>
+      <Flex
+        vertical
+        justify="center"
+        align="center"
+        className={styles.mainContainer}
+      >
+        <ComplaintsFilter onChange={handleSetStatus} />
+        <ComplaintsList status={status} />
+      </Flex>
+    </AuthGuard>
   );
 }

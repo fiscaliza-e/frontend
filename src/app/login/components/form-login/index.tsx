@@ -1,26 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import classNames from "classnames";
-import { Button, Checkbox, Form, Input, Flex } from "antd";
-
+import { Button, Checkbox, Form, Input, Flex, message } from "antd";
 import styles from "./form-login.module.css";
 import Card from "@/components/card";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function LoginForm() {
   const router = useRouter();
+  const { login, isLoading, isAuthenticated } = useAuth();
 
-  const handleSubmit = () => {
-    alert("Login Feito com sucesso!");
-    router.push("/");
+  useEffect(() => {
+    console.log("[LoginForm] isAuthenticated:", isAuthenticated);
+    if (isAuthenticated) {
+      console.log("[LoginForm] Redirecionando para home...");
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+
+  const handleSubmit = async (values: any) => {
+    console.log("[LoginForm] Submetendo login com valores:", values);
+    try {
+      await login({ email: values.email, password: values.password });
+      router.push("/");
+      console.log("[LoginForm] Login realizado com sucesso!");
+      message.success("Login feito com sucesso!");
+    } catch (error: any) {
+      console.log("[LoginForm] Erro ao fazer login:", error);
+      message.error(error.message || "Erro ao fazer login");
+    }
   };
 
   const handleForgotPassword = () => {
+    console.log("[LoginForm] Navegando para /forgot-password");
     router.push("/forgot-password");
   };
 
   const handleRegister = () => {
+    console.log("[LoginForm] Navegando para /register");
     router.push("/register");
   };
 
@@ -33,12 +50,13 @@ export default function LoginForm() {
         onFinish={handleSubmit}
       >
         <Form.Item
-          name="username"
+          name="email"
           rules={[
-            { required: true, message: "Por favor, informe seu usuário!" },
+            { required: true, message: "Por favor, informe seu e-mail!" },
+            { type: "email", message: "Por favor, informe um e-mail válido!" },
           ]}
         >
-          <Input prefix={<UserOutlined />} placeholder="Usuário" />
+          <Input prefix={<UserOutlined />} placeholder="E-mail" type="email" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -62,6 +80,7 @@ export default function LoginForm() {
             type="primary"
             htmlType="submit"
             color="green"
+            loading={isLoading}
           >
             Login
           </Button>

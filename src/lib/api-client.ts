@@ -1,9 +1,15 @@
+import { tokenService } from '@/services/token-service';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 class ApiClient {
   private client: AxiosInstance;
+  private isRefreshing = false;
+  private failedQueue: Array<{
+    resolve: (value?: any) => void;
+    reject: (reason?: any) => void;
+  }> = [];
 
   constructor() {
     this.client = axios.create({
@@ -16,9 +22,10 @@ class ApiClient {
 
     this.client.interceptors.request.use(
       (config) => {
-        const token = this.getAuthToken();
-        if (token) {
+        const token = tokenService.getToken();
+        if (token && !tokenService.isTokenExpired()) {
           config.headers.Authorization = `Bearer ${token}`;
+          tokenService.updateLastActivity();
         }
         return config;
       },
@@ -28,34 +35,67 @@ class ApiClient {
     );
 
     this.client.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        if (error.response?.status === 401) {
-          this.clearAuthToken();
-          window.location.href = '/login';
+      (response) => {
+        tokenService.updateLastActivity();
+        return response;
+      },
+      async (error) => {
+        const originalRequest = error.config;
+
+        if (error.response?.status === 401 && !originalRequest._retry) {
+          if (this.isRefreshing) {
+            return new Promise((resolve, reject) => {
+              this.failedQueue.push({ resolve, reject });
+            }).then(() => {
+              return this.client(originalRequest);
+            }).catch((err) => {
+              return Promise.reject(err);
+            });
+          }
+
+          originalRequest._retry = true;
+          this.isRefreshing = true;
+
+          try {
+            const refreshToken = tokenService.getRefreshToken();
+            if (!refreshToken) {
+              throw new Error('No refresh token available');
+            }
+
+            const response = await this.client.post('/auth/refresh', {
+              refreshToken
+            });
+
+            if (response.data.access_token) {
+              const newRefreshToken = response.data.refresh_token || response.data.access_token;
+              tokenService.setTokens(response.data.access_token, newRefreshToken);
+              
+              this.failedQueue.forEach(({ resolve }) => {
+                resolve();
+              });
+              this.failedQueue = [];
+
+              originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
+              return this.client(originalRequest);
+            } else {
+              throw new Error('Failed to refresh token');
+            }
+          } catch (refreshError) {
+            this.failedQueue.forEach(({ reject }) => {
+              reject(refreshError);
+            });
+            this.failedQueue = [];
+            
+            console.error('Erro na renovação do token:', refreshError);
+            return Promise.reject(refreshError);
+          } finally {
+            this.isRefreshing = false;
+          }
         }
+
         return Promise.reject(error);
       }
     );
-  }
-
-  private getAuthToken(): string | null {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('auth_token');
-    }
-    return null;
-  }
-
-  private setAuthToken(token: string): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('auth_token', token);
-    }
-  }
-
-  private clearAuthToken(): void {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('auth_token');
-    }
   }
 
   async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
@@ -83,16 +123,20 @@ class ApiClient {
     return response.data;
   }
 
+  setTokens(token: string, refreshToken: string): void {
+    tokenService.setTokens(token, refreshToken);
+  }
+
   setToken(token: string): void {
-    this.setAuthToken(token);
+    tokenService.setTokens(token, tokenService.getRefreshToken() || '');
   }
 
   isAuthenticated(): boolean {
-    return !!this.getAuthToken();
+    return tokenService.hasValidToken() && tokenService.isSessionActive();
   }
 
   logout(): void {
-    this.clearAuthToken();
+    tokenService.clearTokens();
   }
 }
 

@@ -1,4 +1,3 @@
-// Tipos para autenticação
 export interface LoginRequest {
   email: string;
   password: string;
@@ -43,6 +42,16 @@ export interface AuthResponse {
       };
     };
     token: string;
+    refreshToken: string;
+  };
+  message?: string;
+}
+
+export interface RefreshTokenResponse {
+  success: boolean;
+  data: {
+    token: string;
+    refreshToken: string;
   };
   message?: string;
 }
@@ -68,6 +77,7 @@ export interface User {
 export interface AuthState {
   user: User | null;
   token: string | null;
+  refreshToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;

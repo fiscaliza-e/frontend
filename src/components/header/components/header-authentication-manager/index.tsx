@@ -1,20 +1,28 @@
-import styles from "./styles.module.css";
-import { UserOutlined } from "@ant-design/icons";
-import { Button, Flex } from "antd";
-import classNames from "classnames";
+"use client";
 
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Button, Flex, Dropdown, MenuProps } from "antd";
+import classNames from "classnames";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
 
 interface Props {
   authenticated: boolean;
-  onClick?: () => void;
 }
 
 export default function HeaderAuthenticationManager({
-  authenticated,
-  onClick,
+  authenticated
 }: Props) {
   const router = useRouter();
+  const { logout } = useAuth();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleLogin = () => {
     router.push("/login");
@@ -28,8 +36,67 @@ export default function HeaderAuthenticationManager({
     router.push("/user/complaints");
   };
 
-  return authenticated ? (
-    <Flex className={styles.authenticatedUserActions} justify="space-around" align="center">
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
+
+  const handleProfile = () => {
+    router.push("/profile");
+  };
+
+  if (!isClient) {
+    return null;
+  }
+
+  if (!authenticated) {
+    return (
+      <Flex
+        justify="space-evenly"
+        align="center"
+        className={styles.headerActionsContainer}
+      >
+        <a className={styles.loginText} onClick={handleLogin}>
+          Entrar
+        </a>
+        <a
+          className={classNames(
+            styles.registerText,
+            styles.hoverElement,
+            styles.defaultElement
+          )}
+          onClick={handleRegister}
+        >
+          Cadastrar
+        </a>
+      </Flex>
+    );
+  }
+
+  const items: MenuProps["items"] = [
+    {
+      key: "profile",
+      label: "Perfil",
+      onClick: handleProfile,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "logout",
+      label: "Sair",
+      danger: true,
+      icon: <LogoutOutlined />,
+      onClick: handleLogout,
+    },
+  ];
+
+  return (
+    <Flex
+      className={styles.authenticatedUserActions}
+      justify="space-around"
+      align="center"
+    >
       <Button
         className={styles.myComplaintsButton}
         onClick={handleNavigateToMyComplaints}
@@ -37,32 +104,17 @@ export default function HeaderAuthenticationManager({
       >
         Ver minhas solicitações
       </Button>
-      <Flex className={classNames(styles.userIconButton, styles.hoverButton)}>
-        <UserOutlined className={styles.userIcon} />
-      </Flex>
-    </Flex>
-  ) : (
-    <Flex
-      justify="space-evenly"
-      align="center"
-      className={styles.headerActionsContainer}
-    >
-      <a
-        className={styles.loginText}
-        onClick={handleLogin}
-      >
-        Entrar
-      </a>
-      <a
-        className={classNames(
-          styles.registerText,
-          styles.hoverElement,
-          styles.defaultElement
-        )}
-        onClick={handleRegister}
-      >
-        Cadastrar
-      </a>
+      <Dropdown menu={{ items }} trigger={["click"]} placement="bottomRight">
+        <Flex
+          className={classNames(
+            styles.userIconButton,
+            styles.hoverButton
+          )}
+          style={{ cursor: "pointer" }}
+        >
+          <UserOutlined className={styles.userIcon} />
+        </Flex>
+      </Dropdown>
     </Flex>
   );
 }

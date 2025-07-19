@@ -1,17 +1,14 @@
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import HeaderAuthenticationManager from "./components/header-authentication-manager";
 
 import styles from "./styles.module.css";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Header() {
-  const [authenticated, setAuthenticated] = useState(true);
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
 
-  const handleAuthentication = () => {
-    setAuthenticated((authenticated) => !authenticated);
-  };
 
   const handleNavigateToHome = () => {
     router.push("/");
@@ -23,8 +20,7 @@ export default function Header() {
         FISCALIZA-e
       </h1>
       <HeaderAuthenticationManager
-        authenticated={true}
-        onClick={handleAuthentication}
+        authenticated={isAuthenticated}
       />
     </header>
   );
