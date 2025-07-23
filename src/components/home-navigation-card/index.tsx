@@ -16,7 +16,12 @@ export default function HomeNavigationCard({
   onClick,
 }: Props) {
   return (
-    <Flex className={styles.card} onClick={onClick} justify="space-between" align="center">
+    <Flex
+      className={styles.card}
+      onClick={onClick}
+      justify="space-between"
+      align="center"
+    >
       <Flex className={styles.cardTextContent} justify="center">
         <p className={styles.cardTitle}>{title}</p>
         <p className={styles.description}>{description}</p>

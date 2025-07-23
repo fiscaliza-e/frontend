@@ -1,0 +1,18 @@
+.statusLabel {
+  padding: 0.3rem 1rem;
+  border-radius: 8px;
+  width: max-content;
+  color: white;
+}
+
+.statusLabel {
+  background-color: var(--color-primary);
+}
+
+.PENDENTE {
+  background-color: #ffd700 !important;
+}
+
+.RESOLVIDA {
+  background-color: #c2cd4b !important;
+}
