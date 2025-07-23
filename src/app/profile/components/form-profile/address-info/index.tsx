@@ -3,7 +3,11 @@ import classNames from "classnames";
 
 import styles from "../form-profile.module.css";
 
-export default function ProfileFormAddressInfo() {
+interface ProfileFormAddressInfoProps {
+  isEditing: boolean;
+}
+
+export default function ProfileFormAddressInfo({ isEditing }: ProfileFormAddressInfoProps) {
   return (
     <Flex vertical className={styles.formSection}>
       <p> Endereço </p>
@@ -11,9 +15,9 @@ export default function ProfileFormAddressInfo() {
         <Form.Item
           className={classNames(styles.formItem, styles.cepInput)}
           label="CEP"
-          name="cep"
+          name="zipCode"
         >
-          <Input onChange={() => {}} />
+          <Input disabled={!isEditing} />
         </Form.Item>
 
         <Form.Item
@@ -21,7 +25,7 @@ export default function ProfileFormAddressInfo() {
           label="Nº"
           name="number"
         >
-          <Input />
+          <Input disabled={!isEditing} />
         </Form.Item>
 
         <Form.Item
@@ -29,15 +33,15 @@ export default function ProfileFormAddressInfo() {
           label="Rua"
           name="street"
         >
-          <Input disabled />
+          <Input disabled={!isEditing} />
         </Form.Item>
 
         <Form.Item
           className={styles.formItem}
           label="Bairro"
-          name="bairro"
+          name="neighborhood"
         >
-          <Input disabled />
+          <Input disabled={!isEditing} />
         </Form.Item>
 
         <Form.Item
@@ -45,15 +49,15 @@ export default function ProfileFormAddressInfo() {
           label="Cidade"
           name="city"
         >
-          <Input disabled />
+          <Input disabled={!isEditing} />
         </Form.Item>
 
         <Form.Item
           className={styles.formItem}
           label="UF"
-          name="uf"
+          name="state"
         >
-          <Input disabled />
+          <Input disabled={!isEditing} />
         </Form.Item>
       </Flex>
     </Flex>

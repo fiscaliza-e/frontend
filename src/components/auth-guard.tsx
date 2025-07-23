@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../hooks/use-auth';
 import { tokenService } from '../services/token-service';
-import { Flex, Spin } from 'antd';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -39,15 +38,17 @@ export function AuthGuard({
     return () => clearInterval(interval);
   }, [isAuthenticated, router]);
 
-  if (isLoading && !isAuthenticated) {
+  if (isLoading) {
     return (
-      <Flex style={{
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         height: '100vh',
         fontSize: '18px'
-      }} vertical justify='center' align='center' gap={10}>
-        <Spin />
+      }}>
         Carregando...
-      </Flex> 
+      </div>
     );
   }
 

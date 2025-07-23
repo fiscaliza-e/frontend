@@ -1,35 +1,37 @@
-import { apiClient, ApiResponse } from '../lib/api-client';
-import { storageUtils } from '../lib/storage-utils';
-import { 
-  LoginRequest, 
-  RegisterRequest, 
-  AuthResponse, 
-  User 
-} from '../types/auth';
+import { apiClient, ApiResponse } from "../lib/api-client";
+import { storageUtils } from "../lib/storage-utils";
+import {
+  LoginRequest,
+  RegisterRequest,
+  AuthResponse,
+  User,
+} from "../types/auth";
 
 class AuthService {
-  private readonly baseUrl = '/auth';
+  private readonly baseUrl = "/auth";
 
-  async login(credentials: LoginRequest): Promise<{ user: any; token: string; refreshToken: string }> {
+  async login(
+    credentials: LoginRequest
+  ): Promise<{ user: any; token: string; refreshToken: string }> {
     try {
       const response = await apiClient.post<any>(
         `${this.baseUrl}/login`,
         credentials
       );
-      
+
       if (response.access_token && response.user) {
         const refreshToken = response.refresh_token || response.access_token;
         apiClient.setTokens(response.access_token, refreshToken);
-        return { 
-          user: response.user, 
+        return {
+          user: response.user,
           token: response.access_token,
-          refreshToken: refreshToken
+          refreshToken: refreshToken,
         };
       } else {
-        throw new Error('Resposta de login inválida');
+        throw new Error("Resposta de login inválida");
       }
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Erro ao fazer login');
+      throw new Error(error.response?.data?.message || "Erro ao fazer login");
     }
   }
 
@@ -47,7 +49,9 @@ class AuthService {
 
       return response;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Erro ao registrar usuário');
+      throw new Error(
+        error.response?.data?.message || "Erro ao registrar usuário"
+      );
     }
   }
 
@@ -55,60 +59,55 @@ class AuthService {
     try {
       const refreshToken = this.getRefreshToken();
       if (refreshToken) {
-        await apiClient.post(`${this.baseUrl}/logout`, { refreshToken });
+        await apiClient.post(`${this.baseUrl}/logout`, {
+          refresh_token: refreshToken,
+        });
       }
     } catch (error) {
+      console.error("Erro no logout:", error);
     } finally {
       apiClient.logout();
     }
   }
 
-  async refreshToken(): Promise<{ token: string; refreshToken: string } | null> {
+  async refreshToken(): Promise<{
+    token: string;
+    refreshToken: string;
+  } | null> {
     try {
       const refreshToken = this.getRefreshToken();
       if (!refreshToken) {
         return null;
       }
 
-      const response = await apiClient.post<any>(
-        `${this.baseUrl}/refresh`,
-        { refreshToken }
-      );
+      const response = await apiClient.post<any>(`${this.baseUrl}/refresh`, {
+        refresh_token: refreshToken,
+      });
 
       if (response.access_token) {
         const newRefreshToken = response.refresh_token || response.access_token;
         apiClient.setTokens(response.access_token, newRefreshToken);
         return {
           token: response.access_token,
-          refreshToken: newRefreshToken
+          refreshToken: newRefreshToken,
         };
       }
       return null;
     } catch (error) {
-      console.error('Erro ao renovar token:', error);
+      console.error("Erro ao renovar token:", error);
       return null;
     }
   }
 
   async validateToken(): Promise<User | null> {
     try {
-      const response = await apiClient.get<ApiResponse<User>>(`${this.baseUrl}/me`);
+      const response = await apiClient.get<ApiResponse<User>>(
+        `${this.baseUrl}/me`
+      );
       return response.success ? response.data || null : null;
     } catch (error) {
       apiClient.logout();
       return null;
-    }
-  }
-
-  async updateProfile(userData: Partial<User>): Promise<ApiResponse<User>> {
-    try {
-      const response = await apiClient.put<ApiResponse<User>>(
-        `${this.baseUrl}/profile`,
-        userData
-      );
-      return response;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Erro ao atualizar perfil');
     }
   }
 
@@ -126,7 +125,7 @@ class AuthService {
       );
       return response;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Erro ao alterar senha');
+      throw new Error(error.response?.data?.message || "Erro ao alterar senha");
     }
   }
 
@@ -138,7 +137,10 @@ class AuthService {
       );
       return response;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Erro ao solicitar redefinição de senha');
+      throw new Error(
+        error.response?.data?.message ||
+          "Erro ao solicitar redefinição de senha"
+      );
     }
   }
 
@@ -156,7 +158,9 @@ class AuthService {
       );
       return response;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Erro ao redefinir senha');
+      throw new Error(
+        error.response?.data?.message || "Erro ao redefinir senha"
+      );
     }
   }
 
@@ -165,11 +169,11 @@ class AuthService {
   }
 
   private getRefreshToken(): string | null {
-    if (typeof window !== 'undefined') {
-      return storageUtils.getItem('refresh_token');
+    if (typeof window !== "undefined") {
+      return storageUtils.getItem("refresh_token");
     }
     return null;
   }
 }
 
-export const authService = new AuthService(); 
+export const authService = new AuthService();

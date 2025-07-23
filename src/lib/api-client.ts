@@ -63,7 +63,7 @@ class ApiClient {
             }
 
             const response = await this.client.post('/auth/refresh', {
-              refreshToken
+              refresh_token: refreshToken
             });
 
             if (response.data.access_token) {

@@ -61,8 +61,10 @@ export interface User {
   cpf: string;
   name: string;
   email: string;
-  birthDate: string;
-  address: {
+  birth_date: string;
+  created_on: string;
+  updated_on: string;
+  addresses: {
     id: number;
     street: string;
     number: string;
@@ -70,7 +72,12 @@ export interface User {
     neighborhood: string;
     city: string;
     state: string;
-    zipCode: string;
+    zip_code: string;
+  };
+  role: {
+    id: number;
+    name: string;
+    description: string;
   };
 }
 

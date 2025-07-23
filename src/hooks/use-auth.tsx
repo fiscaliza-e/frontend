@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, createContext, ReactNode } from 'react';
 import { authService } from '../services/auth-service';
+import { userService } from '../services/user-service';
 import { tokenService } from '../services/token-service';
 import { storageUtils } from '../lib/storage-utils';
 import { User, LoginRequest, RegisterRequest, AuthState } from '../types/auth';
@@ -8,7 +9,6 @@ interface AuthContextType extends AuthState {
   login: (credentials: LoginRequest) => Promise<void>;
   register: (userData: RegisterRequest) => Promise<void>;
   logout: () => Promise<void>;
-  updateProfile: (userData: Partial<User>) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (token: string, newPassword: string) => Promise<void>;
@@ -22,35 +22,31 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [authState, setAuthState] = useState<AuthState>(() => {
-    const user = typeof window !== 'undefined' ? storageUtils.getItem('user', false) : null;
-    const token = typeof window !== 'undefined' ? storageUtils.getItem('auth_token') : null;
-    const refreshToken = typeof window !== 'undefined' ? storageUtils.getItem('refresh_token') : null;
-    return {
-      user: user ? JSON.parse(user) : null,
-      token: token || null,
-      refreshToken: refreshToken || null,
-      isAuthenticated: !!token && tokenService.isSessionActive(),
-      isLoading: true,
-      error: null,
-    };
+  const [authState, setAuthState] = useState<AuthState>({
+    user: null,
+    token: null,
+    refreshToken: null,
+    isAuthenticated: false,
+    isLoading: true,
+    error: null,
   });
 
   const refreshAuth = async (): Promise<boolean> => {
     try {
       const result = await authService.refreshToken();
       if (result) {
-        const user = await authService.validateToken();
+        const user = await userService.getCurrentUser();
         if (user) {
-          storageUtils.setItem('user', JSON.stringify(user), false);
-          setAuthState({
-            user,
-            token: result.token,
-            refreshToken: result.refreshToken,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null,
-          });
+                  storageUtils.setItem('user', JSON.stringify(user), false);
+        tokenService.setTokens(result.token, result.refreshToken);
+        setAuthState({
+          user,
+          token: result.token,
+          refreshToken: result.refreshToken,
+          isAuthenticated: true,
+          isLoading: false,
+          error: null,
+        });
           return true;
         }
       }
@@ -62,48 +58,75 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   useEffect(() => {
-    const validateAuth = async () => {
+    const initializeAuth = async () => {
       try {
-        if (authService.isAuthenticated()) {
-                      const user = await authService.validateToken();
-            if (user) {
-              const token = storageUtils.getItem('auth_token');
-              const refreshToken = storageUtils.getItem('refresh_token');
-              storageUtils.setItem('user', JSON.stringify(user), false);
-              setAuthState({
-                user,
-                token,
-                refreshToken,
-                isAuthenticated: true,
-                isLoading: false,
-                error: null,
-              });
-                    } else {
-          const refreshSuccess = await refreshAuth();
-          if (!refreshSuccess) {
-            console.log('Falha na renovação inicial, mas mantendo sessão ativa');
-          }
-        }
+        const user = storageUtils.getItem('user', false);
+        const token = tokenService.getToken();
+        const refreshToken = tokenService.getRefreshToken();
+        
+        if (user && token && tokenService.hasValidToken()) {
+          const parsedUser = JSON.parse(user);
+          setAuthState({
+            user: parsedUser,
+            token,
+            refreshToken,
+            isAuthenticated: true,
+            isLoading: false,
+            error: null,
+          });
         } else {
-          console.log('Usuário não autenticado, mas mantendo dados salvos');
           setAuthState(prev => ({
             ...prev,
-            isAuthenticated: false,
             isLoading: false,
           }));
         }
       } catch (error) {
-        console.error('Erro ao validar autenticação:', error);
+        console.error('Erro ao inicializar autenticação:', error);
         setAuthState(prev => ({
           ...prev,
-          isAuthenticated: false,
           isLoading: false,
-          error: 'Erro ao validar autenticação',
         }));
       }
     };
-    validateAuth();
+
+    initializeAuth();
   }, []);
+
+  useEffect(() => {
+    const validateAuth = async () => {
+      try {
+        if (authState.isAuthenticated && authState.token) {
+          try {
+            const user = await userService.getCurrentUser();
+            if (user) {
+              storageUtils.setItem('user', JSON.stringify(user), false);
+              setAuthState(prev => ({
+                ...prev,
+                user,
+                isLoading: false,
+              }));
+            } else {
+              const refreshSuccess = await refreshAuth();
+              if (!refreshSuccess) {
+                console.log('Falha na renovação inicial');
+              }
+            }
+          } catch (error) {
+            const refreshSuccess = await refreshAuth();
+            if (!refreshSuccess) {
+              console.log('Falha na renovação inicial');
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao validar autenticação:', error);
+      }
+    };
+
+    if (authState.isAuthenticated && !authState.isLoading) {
+      validateAuth();
+    }
+  }, [authState.isAuthenticated, authState.token]);
 
   useEffect(() => {
     if (authState.isAuthenticated && authState.token) {
@@ -147,8 +170,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const { user, token, refreshToken } = await authService.login(credentials);
       storageUtils.setItem('user', JSON.stringify(user), false);
-      storageUtils.setItem('auth_token', token);
-      storageUtils.setItem('refresh_token', refreshToken);
+      tokenService.setTokens(token, refreshToken);
       setAuthState({
         user,
         token,
@@ -173,10 +195,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await authService.register(userData);
       if (response.success && response.data) {
         storageUtils.setItem('user', JSON.stringify(response.data.user), false);
-        storageUtils.setItem('auth_token', response.data.token);
-        storageUtils.setItem('refresh_token', response.data.refreshToken);
+        tokenService.setTokens(response.data.token, response.data.refreshToken);
         setAuthState({
-          user: response.data.user,
+          user: response.data.user as unknown as User,
           token: response.data.token,
           refreshToken: response.data.refreshToken,
           isAuthenticated: true,
@@ -201,8 +222,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       await authService.logout();
       storageUtils.removeItem('user');
-      storageUtils.removeItem('auth_token');
-      storageUtils.removeItem('refresh_token');
+      tokenService.clearTokens();
       setAuthState({
         user: null,
         token: null,
@@ -217,31 +237,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isLoading: false,
         error: 'Erro ao fazer logout',
       }));
-    }
-  };
-
-  const updateProfile = async (userData: Partial<User>) => {
-    setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
-    
-    try {
-      const response = await authService.updateProfile(userData);
-      
-      if (response.success && response.data) {
-        setAuthState(prev => ({
-          ...prev,
-          user: response.data,
-          isLoading: false,
-        } as AuthState));
-      } else {
-        throw new Error(response.message || 'Erro ao atualizar perfil');
-      }
-    } catch (error: any) {
-      setAuthState(prev => ({
-        ...prev,
-        isLoading: false,
-        error: error.message || 'Erro ao atualizar perfil',
-      }));
-      throw error;
     }
   };
 
@@ -313,7 +308,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     login,
     register,
     logout,
-    updateProfile,
     changePassword,
     forgotPassword,
     resetPassword,
