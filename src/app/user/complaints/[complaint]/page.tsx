@@ -21,8 +21,7 @@ export default function ComplaintDetails() {
   const [data, setData] = useState<Complaint | null>(null);
   const [photo, setPhoto] = useState("");
 
-  const handleSetPhoto = (data: Number) => {
-  };
+  const handleSetPhoto = (data: Number) => {};
 
   useEffect(() => {
     if (complaintID) {
@@ -63,7 +62,7 @@ export default function ComplaintDetails() {
 
       <Flex justify="space-between">
         <ComplaintRegister
-          imagePath={"/icons/estrada.png"}
+          imagePath={"/icons/estrada.svg"}
           description={data.description}
         />
         <Flex vertical className={styles.complaintDetailsInfo}>
