@@ -1,0 +1,10 @@
+.complaintRegisterContainer {
+  min-height: 300px;
+  min-width: 600px;
+}
+
+.complaintPhoto {
+  border: 1px rgb(230, 227, 227) solid;
+  width: 100%;
+  min-height: 300px;
+}

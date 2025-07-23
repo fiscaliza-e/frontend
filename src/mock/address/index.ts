@@ -1,9 +1,10 @@
 const addresses = [
   {
+    id: 1,
     cpf: "123.456.789-00",
-    cep: "57300-000",
+    zipCode: "57300-000",
     street: "Rua das Flores",
-    number: "123",
+    houseNumber: "123",
     complement: "Ap 201, Bloco B",
     neighborhood: "Centro",
     city: "Arapiraca",

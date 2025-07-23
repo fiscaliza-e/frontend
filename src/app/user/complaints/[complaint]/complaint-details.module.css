@@ -1,0 +1,14 @@
+.complaintDetailsContainer {
+  width: 100%;
+  padding: 0 4rem;
+}
+
+.myComplaintsButton {
+  background-color: red;
+  height: 40px;
+}
+
+.complaintDetailsInfo {
+  width: 500px;
+  height: 100%;
+}
