@@ -15,7 +15,24 @@ export default function FormRegister() {
 
   const handleSubmit = async (values: any) => {
     try {
-      await register(values);
+      const payload = {
+        cpf: values.cpf,
+        name: values.name,
+        email: values.email,
+        birthDate: values.birth_date,
+        password: values.password,
+        confirmPassword: values.password,
+        role_id: 1, 
+        address: {
+          street: values.street,
+          number: values.number,
+          neighborhood: values.bairro,
+          city: values.city,
+          state: values.uf,
+          zipCode: values.cep,
+        },
+      };
+      await register(payload);
       message.success("Cadastro realizado com sucesso!");
       form.resetFields();
     } catch (error: any) {
@@ -32,7 +49,7 @@ export default function FormRegister() {
         onFinish={handleSubmit}
       >
         <RegisterFormPersonalInfo />
-        <RegisterFormAddressInfo />
+        <RegisterFormAddressInfo form={form} />
         <RegisterFormAuthInfo />
         <Flex justify="center">
           <Button

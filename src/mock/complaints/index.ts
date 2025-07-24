@@ -55,17 +55,6 @@ const complaints = [
     image: null,
   },
   {
-    id: 6,
-    userCpf: "123.456.789-00",
-    status: "pending",
-    title: "Transporte Coletivo",
-    description: "Linhas de ônibus com atraso de mais de 1 hora.",
-    complaintDate: "2025-06-09",
-    address: null,
-    reference: "Terminal Urbano Central",
-    image: null,
-  },
-  {
     id: 7,
     userCpf: "123.456.789-00",
     status: "forwarded",

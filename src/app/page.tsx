@@ -4,8 +4,11 @@ import data from "@/mock/home-cards";
 import styles from "./page.module.css";
 import "./globals.css";
 import { Flex, Row, Col } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+    const router = useRouter();
+
   return (
     <Flex className={styles.page} vertical align="center">
       <h3 className={styles.homeTitle}>
@@ -25,7 +28,7 @@ export default function Home() {
                 iconPath={card.iconPath}
                 title={card.title}
                 description={card.description}
-                onClick={() => {}}
+                onClick={() => router.push(`/user/complaints?type=${card.title}`)}
               />
             </div>
           </Col>

@@ -30,6 +30,14 @@ export default function RegisterFormPersonalInfo() {
         >
           <Input />
         </Form.Item>
+        <Form.Item
+          className={styles.formItem}
+          label="Data de Nascimento"
+          name="birth_date"
+          rules={[{ required: true, message: "A data de nascimento é obrigatória!" }]}
+        >
+          <Input type="date" />
+        </Form.Item>
       </Flex>
     </Flex>
   );

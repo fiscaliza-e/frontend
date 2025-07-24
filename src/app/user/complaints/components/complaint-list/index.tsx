@@ -18,7 +18,7 @@ export default function ComplaintList(props: Props) {
       vertical
       justify="center"
       align="center"
-      className={styles.ComplaintsContainer}
+      className={styles.complaintsContainer}
     >
       {complaints
         .filter(
@@ -44,7 +44,7 @@ export default function ComplaintList(props: Props) {
                   {complaint.description}
                 </Typography.Paragraph>
               </Flex>
-              <Text type="secondary">{complaint.date}</Text>
+              <Text type="secondary">{complaint.complaintDate}</Text>
             </Flex>
           </Link>
         ))}

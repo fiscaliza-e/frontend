@@ -1,9 +1,34 @@
 import { Flex, Form, Input } from "antd";
 import classNames from "classnames";
+import { useEffect } from "react";
 
 import styles from "../form-register.module.css";
 
-export default function RegisterFormAddressInfo() {
+interface RegisterFormAddressInfoProps {
+  form: any;
+}
+
+export default function RegisterFormAddressInfo({ form }: RegisterFormAddressInfoProps) {
+  const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cep = e.target.value.replace(/\D/g, "");
+    form.setFieldValue("cep", cep);
+    if (cep.length === 8) {
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await res.json();
+        if (!data.erro) {
+          form.setFieldsValue({
+            street: data.logradouro,
+            bairro: data.bairro,
+            city: data.localidade,
+            uf: data.uf,
+          });
+        }
+      } catch (err) {
+      }
+    }
+  };
+
   return (
     <Flex vertical className={styles.formSection}>
       <p> Endereço </p>
@@ -14,7 +39,7 @@ export default function RegisterFormAddressInfo() {
           name="cep"
           rules={[{ required: true, message: "Informe o CEP" }]}
         >
-          <Input onChange={() => {}} />
+          <Input onChange={handleCepChange} maxLength={8} />
         </Form.Item>
 
         <Form.Item

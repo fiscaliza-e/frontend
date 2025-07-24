@@ -4,7 +4,7 @@
   border-radius: 6px;
 
   width: 100%;
-  max-width: 350px; /* Limita o tamanho */
+  max-width: 350px;
   height: 125px;
   padding: 1rem 1.5rem;
   cursor: pointer;

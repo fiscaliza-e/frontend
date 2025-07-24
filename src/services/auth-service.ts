@@ -35,23 +35,33 @@ class AuthService {
     }
   }
 
-  async register(userData: RegisterRequest): Promise<AuthResponse> {
+  async register(userData: RegisterRequest): Promise<any> {
     try {
-      const response = await apiClient.post<AuthResponse>(
-        `${this.baseUrl}/register`,
-        userData
-      );
-
-      if (response.success && response.data?.token) {
-        const refreshToken = response.data.refreshToken || response.data.token;
-        apiClient.setTokens(response.data.token, refreshToken);
-      }
-
-      return response;
+      // 1. Criar endereço
+      const addressPayload = {
+        street: userData.address.street,
+        neighborhood: userData.address.neighborhood,
+        number: userData.address.number ? parseInt(userData.address.number, 10) : undefined,
+        zip_code: userData.address.zipCode ? parseInt(userData.address.zipCode, 10) : undefined,
+        city: userData.address.city,
+        state: userData.address.state,
+      };
+      const addressRes = await apiClient.post<any>("/addresses", addressPayload);
+      if (!addressRes.id) throw new Error("Erro ao criar endereço");
+      // 2. Criar usuário
+      const userPayload = {
+        cpf: userData.cpf,
+        name: userData.name,
+        email: userData.email,
+        birth_date: userData.birthDate,
+        password: userData.password,
+        addresses_id: addressRes.id,
+        role_id: 1,
+      };
+      const userRes = await apiClient.post<any>("/users", userPayload);
+      return userRes;
     } catch (error: any) {
-      throw new Error(
-        error.response?.data?.message || "Erro ao registrar usuário"
-      );
+      throw new Error(error.response?.data?.message || "Erro ao registrar usuário");
     }
   }
 
