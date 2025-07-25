@@ -16,7 +16,7 @@ export default function ComplaintStatus(props: Props) {
   const statusClass = props.status.replace(/\s/g, "");
 
   return (
-    <Flex vertical>
+    <Flex vertical className={styles.statusContainer}>
       <Title level={4}> {props.title}</Title>
       <Typography.Paragraph
         className={classNames(styles.statusLabel, styles[statusClass])}

@@ -8,10 +8,12 @@ import RegisterFormAuthInfo from "./auth-info";
 import classNames from "classnames";
 import Card from "@/components/card";
 import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
 
 export default function FormRegister() {
   const [form] = useForm();
   const { register, isLoading } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (values: any) => {
     try {
@@ -35,6 +37,7 @@ export default function FormRegister() {
       await register(payload);
       message.success("Cadastro realizado com sucesso!");
       form.resetFields();
+      router.push("/login");
     } catch (error: any) {
       message.error(error.message || "Erro ao cadastrar usuário");
     }

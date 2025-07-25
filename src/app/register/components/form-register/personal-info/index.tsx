@@ -6,7 +6,7 @@ export default function RegisterFormPersonalInfo() {
   return (
     <Flex vertical className={styles.formSection}>
       <p> Dados pessoais </p>
-      <Flex justify="space-around" wrap>
+      <Flex justify="flex-start" wrap >
         <Form.Item
           className={styles.formItem}
           style={{ width: 445 }}

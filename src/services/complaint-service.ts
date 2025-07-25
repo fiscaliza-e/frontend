@@ -81,12 +81,16 @@ class ComplaintService {
     }
   }
 
+  async createComplaintRaw(payload: any): Promise<any> {
+    return apiClient.post("/complaints", payload);
+  }
+
   async updateComplaint(
     id: number,
     complaintData: Partial<ComplaintRequest>
   ): Promise<ComplaintResponse> {
     try {
-      const response = await apiClient.put<ComplaintResponse>(
+      const response = await apiClient.patch<ComplaintResponse>(
         `${this.baseUrl}/${id}`,
         complaintData
       );
@@ -218,6 +222,23 @@ class ComplaintService {
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Erro ao buscar estatísticas');
     }
+  }
+
+  async getComplaintStatuses(): Promise<string[]> {
+    const response = await apiClient.get<string[]>("/complaints/system/statuses");
+    return response;
+  }
+
+  async createAddress(address: any): Promise<{ id: number }> {
+    const payload = {
+      street: address.street,
+      neighborhood: address.neighborhood,
+      number: address.number ? parseInt(address.number, 10) : undefined,
+      zip_code: address.zipCode ? parseInt(address.zipCode, 10) : undefined,
+      city: address.city,
+      state: address.state,
+    };
+    return apiClient.post("/addresses", payload);
   }
 }
 

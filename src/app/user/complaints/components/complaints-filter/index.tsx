@@ -1,30 +1,29 @@
 import { Flex } from "antd";
 import styles from "./styles.module.css";
 
-import options from "@/mock/filter-options/index";
-
 interface Props {
   onChange: (value: string) => void;
+  statuses: string[];
 }
 
-export default function ComplaintsFilter({ onChange }: Props) {
+export default function ComplaintsFilter({ onChange, statuses }: Props) {
   return (
-    <Flex vertical justify="center" className={styles.filters}>
-      <Flex justify="space-between" className={styles.filterComplaints}>
-        {options.map((option, index) => (
-          <Flex key={option.id}>
+    <Flex className={styles.filters} align="center" justify="center">
+      <Flex className={styles.filterComplaints}>
+        {statuses.map((status, index) => (
+          <Flex key={status}>
             <input
               key={index}
-              id={option.id}
+              id={status}
               name="filters"
               type="radio"
               className={styles.filterRadio}
-              value={option.id}
+              value={status}
               defaultChecked={index === 0}
               onChange={(e) => onChange(e.target.value)}
             />
-            <label htmlFor={option.id} className={styles.filterLabel}>
-              {option.label}
+            <label htmlFor={status} className={styles.filterLabel}>
+              {status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
             </label>
           </Flex>
         ))}

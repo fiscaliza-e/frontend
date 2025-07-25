@@ -1,15 +1,16 @@
 "use client";
 
-import { Flex } from "antd";
 import { AuthGuard } from "@/components/auth-guard";
 
-import styles from "./page.module.css";
 import ComplaintsFilter from "./components/complaints-filter";
-import ComplaintsList from "./components/complaint-list";
+import ComplaintList from "./components/complaint-list";
 import { useState } from "react";
+import styles from "./page.module.css";
+import { Flex } from "antd";
 
 export default function Complaints() {
   const [status, setStatus] = useState("all");
+  const statuses = ["all", "PENDENTE", "EM ANDAMENTO", "ARQUIVADA"];
 
   const handleSetStatus = (value: string) => {
     setStatus(value);
@@ -18,13 +19,17 @@ export default function Complaints() {
   return (
     <AuthGuard>
       <Flex
+        className={styles.complaintsContent}
         vertical
-        justify="center"
         align="center"
-        className={styles.mainContainer}
+        gap={8}
       >
-        <ComplaintsFilter onChange={handleSetStatus} />
-        <ComplaintsList status={status} />
+        <Flex className={styles.complaintsFilter}>
+          <ComplaintsFilter onChange={handleSetStatus} statuses={statuses} />
+        </Flex>
+        <Flex className={styles.complaintsList}>
+          <ComplaintList status={status} />
+        </Flex>
       </Flex>
     </AuthGuard>
   );

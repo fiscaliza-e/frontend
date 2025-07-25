@@ -35,19 +35,14 @@ export function useDepartments(): UseDepartmentsReturn {
   const fetchDepartments = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
     try {
       const response = await departmentService.getDepartments();
-      
-      if (response.success && response.data) {
-        setState(prev => ({
-          ...prev,
-          departments: response.data,
-          isLoading: false,
-        }));
-      } else {
-        throw new Error(response.message || 'Erro ao buscar departamentos');
-      }
+      const departments = Array.isArray(response) ? response : response.data;
+      setState(prev => ({
+        ...prev,
+        departments,
+        isLoading: false,
+      }));
     } catch (error: any) {
       setError(error.message || 'Erro ao buscar departamentos');
       setLoading(false);

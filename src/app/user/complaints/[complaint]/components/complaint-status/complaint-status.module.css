@@ -16,3 +16,10 @@
 .RESOLVIDA {
   background-color: #c2cd4b !important;
 }
+
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+}

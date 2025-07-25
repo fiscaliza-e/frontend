@@ -1,27 +1,27 @@
+"use client";
 import { Flex, Typography } from "antd";
-import addresses from "@/mock/address";
-
-import { useEffect, useState } from "react";
-import Address from "@/models/address/address";
 import Card from "@/components/card";
 import Title from "antd/es/typography/Title";
+import "./styles.module.css";
 
-interface Props {
-  addressID: Number;
+interface Address {
+  id: number;
+  street: string;
+  number: string | number;
+  complement?: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zipCode: string | number;
 }
 
-export default function ComplaintAddress(props: Props) {
-  const [address, setAddress] = useState<Address | null>(null);
+interface Props {
+  address?: Address | null;
+}
 
-  useEffect(() => {
-    const found = addresses.find(
-      (a) => a.id === props.addressID
-    ) as unknown as Address | null;
-    setAddress(found || null);
-  }, [props.addressID]);
-
+export default function ComplaintAddress({ address }: Props) {
   return (
-    <Flex vertical>
+    <Flex vertical className="addressContainer">
       <Card>
         <Title level={4}>Endereço</Title>
         {!address ? (
@@ -29,10 +29,15 @@ export default function ComplaintAddress(props: Props) {
         ) : (
           <Flex vertical>
             <Typography.Paragraph>
-              {address.street}, nº {address.houseNumber}, {address.neighborhood}
+              {address.street}, nº {address.number}, {address.neighborhood}
             </Typography.Paragraph>
-
+            <Typography.Paragraph>
+              {address.city} - {address.state}
+            </Typography.Paragraph>
             <Typography.Paragraph>Cep: {address.zipCode}</Typography.Paragraph>
+            {address.complement && (
+              <Typography.Paragraph>Complemento: {address.complement}</Typography.Paragraph>
+            )}
           </Flex>
         )}
       </Card>
