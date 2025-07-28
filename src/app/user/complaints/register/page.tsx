@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useComplaints } from "@/hooks/use-complaints";
 import { complaintService } from "@/services/complaint-service";
 import { AuthGuard } from "@/components/auth-guard";
+import { useDepartments } from "@/hooks";
 
 const { Title, Paragraph } = Typography;
 
@@ -19,30 +20,11 @@ export default function ComplaintRegisterPage() {
   const { createComplaintWithAddress } = useComplaints();
 
   const [form] = Form.useForm();
-  const [statuses, setStatuses] = useState<string[]>([]);
-  const [isLoadingStatuses, setIsLoadingStatuses] = useState(true);
-  const [errorStatuses, setErrorStatuses] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [addressFields, setAddressFields] = useState<any>({});
   const [showAddressFields, setShowAddressFields] = useState(false);
   const [cepLoading, setCepLoading] = useState(false);
-
-  useEffect(() => {
-    async function fetchStatuses() {
-      setIsLoadingStatuses(true);
-      setErrorStatuses(null);
-      try {
-        const res = await complaintService.getComplaintStatuses();
-        setStatuses(res);
-      } catch (err: any) {
-        setErrorStatuses(err.message || "Erro ao buscar status");
-        setStatuses(["PENDENTE", "OPEN", "RESOLVED"]);
-      } finally {
-        setIsLoadingStatuses(false);
-      }
-    }
-    fetchStatuses();
-  }, []);
+  const { departments } = useDepartments()
 
   const handleCepChange = (e: any) => {
     const cep = e.target.value.replace(/\D/g, "");
@@ -91,43 +73,6 @@ export default function ComplaintRegisterPage() {
     }
   };
 
-  const handleCepBlur = async () => {
-    const cep = form.getFieldValue("zipCode")?.replace(/\D/g, "");
-    if (cep && cep.length === 8) {
-      setCepLoading(true);
-      try {
-        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        const data = await res.json();
-        if (!data.erro) {
-          setShowAddressFields(true);
-          form.setFieldsValue({
-            street: data.logradouro || "",
-            neighborhood: data.bairro || "",
-            city: data.localidade || "",
-            state: data.uf || "",
-            number: ""
-          });
-        } else {
-          setShowAddressFields(false);
-          form.setFieldsValue({
-            street: "",
-            neighborhood: "",
-            city: "",
-            state: "",
-            number: ""
-          });
-        }
-      } catch {
-        setShowAddressFields(false);
-      } finally {
-        setCepLoading(false);
-      }
-    } else {
-      setShowAddressFields(false);
-      setCepLoading(false);
-    }
-  };
-
   const handleFinish = async (values: any) => {
     setLoading(true);
     try {
@@ -137,7 +82,7 @@ export default function ComplaintRegisterPage() {
         department_id: departmentId ? Number(departmentId) : 1,
         title: values.title,
         description: values.description,
-        status: values.status,
+        status: "PENDENTE",
         complaint_date: dayjs().format("YYYY-MM-DD"),
         address: {
           street: values.street,
@@ -167,17 +112,13 @@ export default function ComplaintRegisterPage() {
       <Flex style={{ width: "100vw", minHeight: "80vh", background: "#f8f9fa" }} justify="center" align="flex-start">
         <Card style={{ width: "75vw", maxWidth: 1000, marginTop: 48, marginBottom: 48, borderRadius: 12, boxShadow: "0 2px 12px #0001" }}>
           <Title level={3}>Registrar Reclamação</Title>
-          {isLoadingStatuses ? (
-            <Spin style={{ margin: 32 }} />
-          ) : errorStatuses ? (
-            <Paragraph type="danger">Erro ao buscar status</Paragraph>
-          ) : (
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={handleFinish}
-              style={{ marginTop: 32 }}
-            >
+          <Typography.Text >Departamento: {departments.find((item) => String(item.id) === departmentId)?.name}</Typography.Text>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleFinish}
+            style={{ marginTop: 32 }}
+          >
               <Form.Item
                 label="Título"
                 name="title"
@@ -192,28 +133,15 @@ export default function ComplaintRegisterPage() {
               >
                 <Input.TextArea rows={5} placeholder="Descreva o problema detalhadamente..." />
               </Form.Item>
-              <Flex gap={16} style={{ width: "100%" }}>
-                <Form.Item
-                  label="Status"
-                  name="status"
-                  rules={[{ required: true, message: "Selecione o status" }]}
-                  initialValue={statuses[0]}
-                  style={{ flex: 1 }}
-                >
-                  <Select placeholder="Selecione o status">
-                    {statuses.map((s) => (
-                      <Select.Option key={s} value={s}>{s}</Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item label="CEP" name="zipCode" rules={[{ required: true, message: "Informe o CEP" }]} style={{ flex: 1 }}>
-                  <Input
-                    onChange={handleCepChange}
-                    maxLength={8}
-                    suffix={cepLoading ? <Spin size="small" /> : <span style={{ width: 16, display: "inline-block" }} />}
-                  />
-                </Form.Item>
-              </Flex>
+            <Flex gap={16} style={{ width: "25%" }}>
+              <Form.Item label="CEP" name="zipCode" rules={[{ required: true, message: "Informe o CEP" }]} style={{ flex: 1 }}>
+                <Input
+                  onChange={handleCepChange}
+                  maxLength={8}
+                  suffix={cepLoading ? <Spin size="small" /> : <span style={{ width: 16, display: "inline-block" }} />}
+                />
+              </Form.Item>
+            </Flex>
               {showAddressFields && (
                 <>
                   <Flex gap={16} style={{ width: "100%" }}>
@@ -240,18 +168,17 @@ export default function ComplaintRegisterPage() {
                   </Flex>
                 </>
               )}
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  style={{ width: 200, background: "var(--color-primary)", borderColor: "var(--color-primary)" }}
-                  loading={loading}
-                >
-                  Registrar Reclamação
-                </Button>
-              </Form.Item>
-            </Form>
-          )}
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: 200, background: "var(--color-primary)", borderColor: "var(--color-primary)" }}
+                loading={loading}
+              >
+                Registrar Reclamação
+              </Button>
+            </Form.Item>
+          </Form>
         </Card>
       </Flex>
     </AuthGuard>

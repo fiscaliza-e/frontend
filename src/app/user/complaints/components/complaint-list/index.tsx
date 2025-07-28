@@ -109,10 +109,8 @@ export default function ComplaintList({ status }: Props) {
                         try {
                           await deleteComplaint(complaint.id);
                           message.success('Reclamação arquivada com sucesso!');
-                          // Atualizar lista após arquivar
                           setComplaints(prev => prev.filter(c => c.id !== complaint.id));
                         } catch (err: any) {
-                          message.error(err.message || 'Erro ao arquivar reclamação');
                         } finally {
                           setArchivingId(null);
                         }

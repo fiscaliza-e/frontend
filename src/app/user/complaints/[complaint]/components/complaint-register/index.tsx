@@ -29,10 +29,6 @@ export default function ComplaintRegister(props: Props) {
             className={styles.complaintPhoto}
           />
         </Flex>
-        <Flex vertical>
-          <Title level={4}>Descrição</Title>
-          <Typography.Paragraph>{props.description}</Typography.Paragraph>
-        </Flex>
       </Flex>
     </Card>
   );

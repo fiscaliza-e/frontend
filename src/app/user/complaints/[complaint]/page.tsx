@@ -1,11 +1,11 @@
 "use client";
-import { Button, Flex, Tooltip, Modal } from "antd";
+import { Button, Flex, Tooltip, Modal, message } from "antd";
 import ComplaintStatus from "./components/complaint-status";
 import ComplaintAddress from "./components/complaint-address";
 import ComplaintObservations from "./components/complaint-observations";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import Complaint from "@/models/complaint/complaint";
 
@@ -19,26 +19,20 @@ export default function ComplaintDetails() {
   const params = useParams();
   const complaintID = Number(params.complaint);
 
-  console.log('params:', params);
-  console.log('complaintID:', complaintID);
-
   const { fetchComplaintById, currentComplaint, isLoading, deleteComplaint } = useComplaints();
   const [archiving, setArchiving] = useState(false);
-  const [messageApi, contextHolder] = require('antd').message.useMessage();
-  const router = require('next/navigation').useRouter();
+  const [messageApi, contextHolder] = message.useMessage();
+  const router = useRouter();
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log('useEffect - complaintID:', complaintID);
     if (complaintID) {
       fetchComplaintById(complaintID);
     }
   }, [complaintID, fetchComplaintById]);
 
-  console.log('currentComplaint:', currentComplaint);
-  console.log('isLoading:', isLoading);
-
   if (isLoading) return <p>Carregando...</p>;
+  
   if (!currentComplaint) return <p>Não encontrado...</p>;
 
   return (
@@ -66,17 +60,16 @@ export default function ComplaintDetails() {
           </Button>
           <Button
             className={styles.myComplaintsButton}
-            type="primary"
             loading={archiving}
-            style={{ background: 'var(--color-primary)', borderColor: 'var(--color-primary)', minWidth: 120, width: '50%', height: '35px'  }}
+            style={{ background: 'red', minWidth: 120, width: '50%', height: '35px', color: '#fff'  }}
             onClick={async () => {
               setArchiving(true);
               try {
                 await deleteComplaint(currentComplaint.id);
                 messageApi.success('Reclamação arquivada com sucesso!');
-                setTimeout(() => router.push('/user/complaints'), 1000);
+                router.refresh()
+                router.push('/user/complaints');
               } catch (err: any) {
-                messageApi.error(err.message || 'Erro ao arquivar reclamação');
               } finally {
                 setArchiving(false);
               }
@@ -94,7 +87,7 @@ export default function ComplaintDetails() {
           description={currentComplaint.description}
         />
         <Flex vertical className={styles.complaintDetailsInfo} style={{ flex: 1 }}>
-          <ComplaintAddress address={currentComplaint.address} />
+          <ComplaintAddress address={currentComplaint.address} description={currentComplaint.description}/>
           {/* <ComplaintObservations data={currentComplaint.description} /> */}
         </Flex>
       </Flex>
